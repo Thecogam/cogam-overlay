@@ -103,6 +103,11 @@
   // ---- Twitch chat (anonymous, read-only) ----
   const tags = (raw) => { const o = {}; raw.slice(1).split(';').forEach((kv) => { const i = kv.indexOf('='); o[kv.slice(0, i)] = kv.slice(i + 1); }); return o; };
   let ws;
+  // CogamCrew's game messages drive the on-screen moments.
+  function botMessage(text) {
+    const d = text.match(/CREW DROP from (.+?)!/);
+    if (d) startDrop(d[1], 10);
+  }
   function onLine(line) {
     if (line.startsWith('PING')) return ws.send('PONG :tmi.twitch.tv');
     const m = line.match(/^(@\S+ )?:(\S+?)!?\S* (PRIVMSG|USERNOTICE) #\S+ ?:?(.*)$/);
@@ -110,14 +115,15 @@
     const t = m[1] ? tags(m[1].trim()) : {}, user = (m[2] || '').toLowerCase(), cmd = m[3], text = m[4] || '';
     if (cmd === 'PRIVMSG') {
       const isBot = text.startsWith('🤖 CogamCrew:');
-      if (!isBot) { msgs.push(Date.now()); boost += hype(text); }
+      if (isBot) botMessage(text);
+      else { msgs.push(Date.now()); boost += hype(text); }
       if (t.bits) boost += Number(t.bits) / 100;
       if (text.trim().toLowerCase() === '!grab') grab(user);
-      const d = isBot && text.match(/CREW DROP from (.+?)!/);
-      if (d) startDrop(d[1], 10);
       log(`connected · #${CHANNEL} · heat ${stars}`);
     } else if (cmd === 'USERNOTICE') {
       const kind = t['msg-id'];
+      // Bot announcements (the highlighted messages) arrive as USERNOTICE, not PRIVMSG.
+      if (kind === 'announcement' && text.startsWith('🤖 CogamCrew:')) botMessage(text);
       if (kind === 'sub' || kind === 'resub' || kind === 'subgift' || kind === 'submysterygift') boost += 1;
       if (kind === 'raid') boost += 2;
     }
