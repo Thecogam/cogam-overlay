@@ -1,17 +1,11 @@
 {
- "updatedAt": "2026-11-17T12:43:51.405Z",
+ "updatedAt": "2026-11-17T12:46:36.405Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
   "current": 111,
   "target": 150
  },
- "top": [
-  {
-   "name": "Thecogam",
-   "xp": 100,
-   "rank": "1-Star Rookie"
-  }
- ],
+ "top": [],
  "latest": []
 }
