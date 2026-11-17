@@ -22,7 +22,9 @@
   #cg { --pink:#ff2e88; --orange:#ff8a3d; --cyan:#19e3ff; --gold:#ffd25e; --violet:#7a3cff;
     position:fixed; left:0; top:0; width:1920px; height:1080px; overflow:hidden; pointer-events:none; transform-origin:0 0;
     font-family:"Chakra Petch",Consolas,monospace; color:#fff; }
+  #cg, #cg * { box-sizing:border-box; }
   #cg .hide { display:none !important; }
+  #cg .games > .card { width:100%; }
   #cg .tube { border:3px solid var(--pink); border-radius:18px; background:rgba(12,7,32,.62);
     box-shadow:0 0 8px var(--pink),0 0 22px rgba(255,46,136,.55),inset 0 0 14px rgba(255,46,136,.3); }
   #cg .tube.c { border-color:var(--cyan); box-shadow:0 0 8px var(--cyan),0 0 22px rgba(25,227,255,.5),inset 0 0 14px rgba(25,227,255,.28); }
@@ -50,19 +52,65 @@
   #cg .ticker { position:absolute; left:50%; bottom:36px; transform:translateX(-50%); width:760px; height:52px; display:flex; align-items:center; gap:14px; padding:0 22px; overflow:hidden; }
   #cg .ticker .tag { font-weight:700; font-size:14px; letter-spacing:.2em; color:#0c0720; background:var(--cyan); padding:4px 10px; border-radius:4px; flex:none; }
   #cg .ticker .item { font-size:21px; white-space:nowrap; }
-  #cg .games { position:absolute; left:50%; top:122px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:12px; }
-  #cg .card { text-align:center; display:grid; gap:6px; padding:16px 30px; min-width:560px; max-width:900px; background:rgba(12,7,32,.86); }
-  #cg .card .k { font-size:17px; letter-spacing:.32em; text-transform:uppercase; color:var(--gold); }
-  #cg .card .h { font-size:38px; font-weight:700; color:#ffd9ea; text-shadow:0 0 8px var(--pink),0 0 20px var(--pink); }
-  #cg .card .s { font-family:Barlow,sans-serif; font-size:22px; color:#e4dbff; }
-  #cg .card .h.sm { font-size:24px; }
-  #cg .hp { height:22px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; margin-top:6px; }
+  /* Game cards: compact column on the left under the goal, kept above the GTA minimap so the centre stays clear */
+  #cg .games { position:absolute; left:44px; top:252px; width:420px; display:flex; flex-direction:column; gap:10px; }
+  #cg .card { text-align:left; display:grid; gap:4px; padding:10px 16px; background:rgba(12,7,32,.82); }
+  #cg .card .k { font-size:13px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); }
+  #cg .card .h { font-size:20px; font-weight:700; color:#ffd9ea; text-shadow:0 0 6px var(--pink); }
+  #cg .card .s { font-family:Barlow,sans-serif; font-size:16px; color:#e4dbff; }
+  #cg .card .h.sm { font-size:16px; }
+  #cg .card .row { display:flex; align-items:center; gap:12px; }
+  #cg .hp { height:14px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; margin-top:2px; }
   #cg .hp > span { display:block; height:100%; background:linear-gradient(90deg,var(--orange),var(--pink)); box-shadow:0 0 14px var(--pink); transition:width .4s; }
-  #cg .opts { display:grid; gap:8px; text-align:left; margin-top:6px; }
-  #cg .opt { display:grid; grid-template-columns:44px 1fr 60px; gap:10px; align-items:center; font-size:20px; }
+  #cg .opts { display:grid; gap:5px; margin-top:2px; }
+  #cg .opt { display:grid; grid-template-columns:30px 1fr 34px; gap:6px 8px; align-items:center; font-size:15px; }
   #cg .opt .n { font-weight:700; color:var(--cyan); } #cg .opt .v { text-align:right; color:var(--gold); font-variant-numeric:tabular-nums; }
-  #cg .opt .b { height:8px; border-radius:999px; background:rgba(255,255,255,.12); grid-column:2/4; overflow:hidden; } #cg .opt .b span { display:block; height:100%; width:0; background:var(--cyan); box-shadow:0 0 8px var(--cyan); transition:width .4s; }
-  #cg .crate { font-size:64px; line-height:1; filter:drop-shadow(0 0 14px var(--cyan)); animation:cg-bob 1.2s ease-in-out infinite; }
+  #cg .opt .b { height:5px; border-radius:999px; background:rgba(255,255,255,.12); grid-column:2/4; overflow:hidden; } #cg .opt .b span { display:block; height:100%; width:0; background:var(--cyan); box-shadow:0 0 8px var(--cyan); transition:width .4s; }
+  #cg .crate { font-size:34px; line-height:1; filter:drop-shadow(0 0 10px var(--cyan)); animation:cg-bob 1.2s ease-in-out infinite; }
+
+  /* Animated stream border: flowing neon gradient + corner brackets */
+  @property --cg-angle { syntax:'<angle>'; inherits:false; initial-value:0deg; }
+  #cg .frame { position:absolute; inset:8px; border-radius:22px; padding:4px; pointer-events:none;
+    background:conic-gradient(from var(--cg-angle), var(--pink), var(--orange), var(--gold), var(--cyan), var(--violet), var(--pink));
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude;
+    filter:drop-shadow(0 0 6px var(--pink)) drop-shadow(0 0 14px rgba(255,46,136,.5)); opacity:.85; animation:cg-spin 12s linear infinite; }
+  #cg .corner { position:absolute; width:46px; height:46px; border:4px solid var(--cyan); filter:drop-shadow(0 0 8px var(--cyan)); animation:cg-corner 3s ease-in-out infinite; }
+  #cg .corner.tl { left:2px; top:2px; border-right:0; border-bottom:0; border-radius:18px 0 0 0; }
+  #cg .corner.tr { right:2px; top:2px; border-left:0; border-bottom:0; border-radius:0 18px 0 0; animation-delay:.75s; }
+  #cg .corner.bl { left:2px; bottom:2px; border-right:0; border-top:0; border-radius:0 0 0 18px; animation-delay:2.25s; }
+  #cg .corner.br { right:2px; bottom:2px; border-left:0; border-top:0; border-radius:0 0 18px 0; animation-delay:1.5s; }
+
+  /* Living panels */
+  #cg .tube { animation:cg-breathe 4.5s ease-in-out infinite; }
+  #cg .tube.c { animation-name:cg-breathe-c; }
+  #cg .brand .word span { --glow:var(--pink); text-shadow:0 0 4px #fff,0 0 10px var(--glow),0 0 22px var(--glow); animation:cg-surge 8s infinite; }
+  #cg .brand .word span:nth-child(2){animation-delay:.12s} #cg .brand .word span:nth-child(3){animation-delay:.24s} #cg .brand .word span:nth-child(4){animation-delay:.36s} #cg .brand .word span:nth-child(5){animation-delay:.48s}
+  #cg .brand .the { animation:cg-flicker 7s infinite; }
+  #cg .bar > span { position:relative; overflow:hidden; }
+  #cg .bar > span::after { content:""; position:absolute; inset:0; background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.65) 50%,transparent 70%); animation:cg-shimmer 2.8s ease-in-out infinite; }
+  #cg .heat[data-level="3"], #cg .heat[data-level="4"] { border-color:var(--orange); box-shadow:0 0 8px var(--orange),0 0 26px rgba(255,138,61,.6),inset 0 0 14px rgba(255,138,61,.35); }
+  #cg .heat[data-level="5"], #cg .heat[data-level="6"] { border-color:var(--gold); box-shadow:0 0 10px var(--gold),0 0 34px rgba(255,210,94,.7),inset 0 0 16px rgba(255,210,94,.4); animation:cg-hot 1.2s ease-in-out infinite; }
+  #cg .stars span.on { animation:cg-twinkle 2.4s ease-in-out infinite; }
+  #cg .stars span.on:nth-child(2){animation-delay:.3s} #cg .stars span.on:nth-child(3){animation-delay:.6s} #cg .stars span.on:nth-child(4){animation-delay:.9s} #cg .stars span.on:nth-child(5){animation-delay:1.2s} #cg .stars span.on:nth-child(6){animation-delay:1.5s}
+  #cg .lb li { animation:cg-row .6s both; } #cg .lb li:nth-child(2){animation-delay:.08s} #cg .lb li:nth-child(3){animation-delay:.16s} #cg .lb li:nth-child(4){animation-delay:.24s} #cg .lb li:nth-child(5){animation-delay:.32s}
+  #cg .lb li:first-child .p { color:var(--gold); text-shadow:0 0 8px var(--gold); animation:cg-glint 3s ease-in-out infinite; }
+  #cg .ticker .tag { animation:cg-tag 2s ease-in-out infinite; }
+  #cg .ticker .item.swap { animation:cg-slide .6s cubic-bezier(.2,.9,.25,1.1) both; }
+  #cg .title i { animation:cg-twinkle 3s ease-in-out infinite; }
+  @keyframes cg-spin { to { --cg-angle:360deg; } }
+  @keyframes cg-corner { 0%,100%{opacity:.55} 50%{opacity:1} }
+  @keyframes cg-breathe { 0%,100%{box-shadow:0 0 6px var(--pink),0 0 16px rgba(255,46,136,.4),inset 0 0 10px rgba(255,46,136,.22)} 50%{box-shadow:0 0 10px var(--pink),0 0 28px rgba(255,46,136,.7),inset 0 0 16px rgba(255,46,136,.38)} }
+  @keyframes cg-breathe-c { 0%,100%{box-shadow:0 0 6px var(--cyan),0 0 16px rgba(25,227,255,.4),inset 0 0 10px rgba(25,227,255,.2)} 50%{box-shadow:0 0 10px var(--cyan),0 0 28px rgba(25,227,255,.65),inset 0 0 16px rgba(25,227,255,.35)} }
+  @property --glow { syntax:'<color>'; inherits:true; initial-value:#ff2e88; }
+  @keyframes cg-surge { 0%,35%,100%{--glow:var(--pink)} 45%{--glow:var(--orange)} 55%{--glow:var(--gold)} 70%{--glow:var(--cyan)} }
+  @keyframes cg-flicker { 0%,92%,95%,100%{opacity:1} 93%{opacity:.3} 94%{opacity:.85} }
+  @keyframes cg-shimmer { 0%{transform:translateX(-100%)} 60%,100%{transform:translateX(100%)} }
+  @keyframes cg-hot { 0%,100%{transform:translateX(-50%) scale(1)} 50%{transform:translateX(-50%) scale(1.04)} }
+  @keyframes cg-twinkle { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.45)} }
+  @keyframes cg-row { from{opacity:0;translate:16px 0} to{opacity:1;translate:0 0} }
+  @keyframes cg-glint { 0%,70%,100%{filter:brightness(1)} 80%{filter:brightness(1.9)} }
+  @keyframes cg-tag { 0%,100%{box-shadow:0 0 0 rgba(25,227,255,0)} 50%{box-shadow:0 0 14px var(--cyan)} }
+  @keyframes cg-slide { from{opacity:0;translate:0 24px} to{opacity:1;translate:0 0} }
   #cg .alert { position:absolute; left:50%; top:600px; transform:translateX(-50%); text-align:center; display:grid; gap:4px; padding:18px 34px; min-width:480px; background:rgba(12,7,32,.86); }
   #cg .alert .k { font-size:17px; letter-spacing:.32em; text-transform:uppercase; color:var(--cyan); }
   #cg .alert .h { font-size:36px; font-weight:700; color:#ffd9ea; text-shadow:0 0 8px var(--pink),0 0 20px var(--pink); }
@@ -91,17 +139,18 @@
   root.id = 'cg';
   const starRow = (n = 6) => '<span>★</span>'.repeat(n);
   root.innerHTML = `
-    <div class="brand"><div class="the">the</div><div class="word">COGAM</div></div>
+    <div class="frame"></div><div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="brand"><div class="the">the</div><div class="word"><span>C</span><span>O</span><span>G</span><span>A</span><span>M</span></div></div>
     <div class="goal tube"><div class="title"><i>★</i><span data-goal-label>Follower goal</span></div><div class="bar"><span data-goal-bar></span></div><div class="num"><span><b data-goal-now>–</b> / <span data-goal-target>–</span></span><span>today</span></div></div>
     <div class="heat tube"><div class="title" style="font-size:14px">Chat heat</div><div class="stars" data-heat>${starRow()}</div></div>
     <div class="lb tube c"><div class="title"><i>★</i>Top crew</div><ol data-lb><li><span class="p">–</span><span>Crew loading…</span><span class="r"></span></li></ol></div>
     <div class="chat tube"><div class="title"><i>★</i>Chat</div><div class="list" data-chat></div></div>
     <div class="ticker tube c"><span class="tag">Latest</span><span class="item" data-ticker>Welcome to the stream</span></div>
     <div class="games">
-      <div class="card tube c siege hide" data-siege><div class="k">🚁 Chopper siege</div><div class="h sm">Type !hit · cheers & subs deal massive damage</div><div class="hp"><span data-hp style="width:100%"></span></div><div class="s" data-hp-text></div></div>
-      <div class="card tube vote hide" data-vote><div class="k">🗳️ Chaos vote</div><div class="opts" data-opts></div><div class="s" data-vote-time></div></div>
-      <div class="card tube c drop hide" data-drop><div class="k">Crew drop</div><div class="crate">📦</div><div class="h" data-drop-who></div><div class="s">Type <b>!grab</b> · <b data-drop-left>10</b> crates left</div></div>
-      <div class="card tube c quiz hide" data-quiz><div class="k">❓ Trivia</div><div class="h sm" data-quiz-q></div><div class="s">First correct answer in chat wins XP</div></div>
+      <div class="card tube c siege hide" data-siege><div class="k">🚁 Chopper siege · !hit</div><div class="hp"><span data-hp style="width:100%"></span></div><div class="s" data-hp-text></div></div>
+      <div class="card tube vote hide" data-vote><div class="k">🗳️ Chaos vote · !1 !2 !3</div><div class="opts" data-opts></div><div class="s" data-vote-time></div></div>
+      <div class="card tube c drop hide" data-drop><div class="k">📦 Crew drop · !grab</div><div class="row"><div class="crate">📦</div><div><div class="h" data-drop-who></div><div class="s"><b data-drop-left>10</b> crates left</div></div></div></div>
+      <div class="card tube c quiz hide" data-quiz><div class="k">❓ Trivia · answer in chat</div><div class="h sm" data-quiz-q></div></div>
     </div>
     <div data-alerts></div>
     <div class="debug ${DEBUG ? '' : 'hide'}" data-debug>connecting…</div>`;
@@ -114,7 +163,7 @@
   const show = (el) => { el.classList.remove('hide', 'out'); void el.offsetWidth; el.classList.add('in'); };
   const hide = (el) => { el.classList.remove('in'); el.classList.add('out'); setTimeout(() => { el.classList.add('hide'); el.classList.remove('out'); }, 500); };
   const shake = () => { root.classList.remove('shake'); void root.offsetWidth; root.classList.add('shake'); };
-  const ticker = (t) => { $('[data-ticker]').textContent = t; };
+  const ticker = (t) => { const el = $('[data-ticker]'); el.textContent = t; el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); };
 
   // ---------------- alerts (queued, tiered) ----------------
   const queue = []; let alertBusy = false;
@@ -154,7 +203,7 @@
   let msgs = [], baseline = 0, samples = 0, boost = 0, stars = 0, last = 0;
   const heatEls = [...$('[data-heat]').children];
   const hype = (t) => { const x = ` ${t.toLowerCase()} `; return HYPE.some((w) => (w.length <= 2 ? x.includes(` ${w} `) : x.includes(w))) ? 0.15 : 0; };
-  const paintHeat = () => heatEls.forEach((s, i) => s.classList.toggle('on', i < stars));
+  const paintHeat = () => { heatEls.forEach((s, i) => s.classList.toggle('on', i < stars)); $('.heat').dataset.level = String(stars); };
   setInterval(() => {
     const now = Date.now(), dt = last ? (now - last) / 1000 : 0; last = now;
     boost = Math.max(0, boost - dt / 45);
