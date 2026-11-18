@@ -189,9 +189,15 @@
     <div class="fx" data-fx></div>
     <div data-alerts></div>
     <div class="debug ${DEBUG ? '' : 'hide'}" data-debug>connecting…</div>`;
-  document.body.appendChild(root);
+  // COGAM_MOUNT: render inside a given element (playground page) instead of covering the window
+  const MOUNT = window.COGAM_MOUNT || null;
+  if (MOUNT) root.style.position = 'absolute';
+  (MOUNT || document.body).appendChild(root);
   const $ = (s) => root.querySelector(s);
-  const fit = () => { const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080) || 1; root.style.transform = `scale(${s})`; };
+  const fit = () => {
+    const s = MOUNT ? (MOUNT.clientWidth / 1920 || 1) : (Math.min(window.innerWidth / 1920, window.innerHeight / 1080) || 1);
+    root.style.transform = `scale(${s})`;
+  };
   window.addEventListener('resize', fit); fit();
   const log = (t) => { if (DEBUG) $('[data-debug]').textContent = t; };
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -450,12 +456,14 @@
     ws.onmessage = (e) => String(e.data).split('\r\n').filter(Boolean).forEach(onLine);
     ws.onclose = () => { log('reconnecting…'); setTimeout(connect, 3000); };
   }
-  connect();
+  // COGAM_PLAYGROUND: no live Twitch connection; the page feeds simulated chat/bot/event lines through window.cogamSim
+  const PLAYGROUND = Boolean(window.COGAM_PLAYGROUND);
+  if (!PLAYGROUND) connect();
 
   // ---------------- slow data: goal + Top Crew ----------------
   async function loadData() {
     try {
-      const d = await (await fetch(`${DATA_URL}?t=${Math.floor(Date.now() / 60000)}`, { cache: 'no-store' })).json();
+      const d = window.COGAM_DATA || await (await fetch(`${DATA_URL}?t=${Math.floor(Date.now() / 60000)}`, { cache: 'no-store' })).json();
       if (d.goal) {
         $('[data-goal-label]').textContent = d.goal.label || 'Follower goal';
         $('[data-goal-now]').textContent = d.goal.current; $('[data-goal-target]').textContent = d.goal.target;
@@ -485,6 +493,7 @@
     } catch { /* keep the last good data */ }
   }
   loadData(); setInterval(loadData, 60000);
+  if (PLAYGROUND) window.cogamSim = { line: onLine, reloadData: loadData, stars: () => stars };
 
   // ---------------- demo ----------------
   if (DEMO) {
