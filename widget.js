@@ -360,7 +360,8 @@
   function siegeDamage(n) { if (!siege) return; siege.hp -= n; siegePaint(); }
   function siegeEnd() { if (!siege) return; siege = null; hide($('[data-siege]')); }
 
-  function voteStart(options) {
+  function voteStart(options, title = '🗳️ Crew vote · !1 !2 !3') {
+    $('[data-vote] .k').textContent = title;
     vote = { options, tally: options.map(() => 0), voters: new Set(), ends: Date.now() + GAME.voteSeconds * 1000 };
     $('[data-opts]').innerHTML = options.map((o, i) => `<div class="opt"><span class="n">!${i + 1}</span><span>${esc(o)}</span><span class="v" data-v${i}>0</span><span class="b"><span data-b${i}></span></span></div>`).join('');
     show($('[data-vote]')); votePaint();
@@ -420,12 +421,13 @@
     else if ((m = text.match(/^🏁 Mission done in ([\d.]+) minutes: (YES|NO)/))) alert('small', 'Mission bet settled', `${m[2]} wins`, `${m[1]} minutes`);
     else if ((m = text.match(/^🎲 (DEATHS|CRASHES) POOL: final count (\d+)\. Winners?: (.+)$/))) alert('medium', `${m[1].toLowerCase()} pool · ${m[2]}`, m[3].split(' (')[0], 'closest guess takes the pot');
     else if ((m = text.match(/^🏆 Quote of the stream: "(.+?)"/))) alert('medium', 'Quote of the stream', `“${m[1].slice(0, 60)}”`, 'Into the Hall of Fame');
-    if ((m = text.match(/^🎨 ★5 · VIBE VOTE \(\d+s\): (.+?)\. Chat picks/))) { stars = Math.max(stars, 5); paintHeat(); voteStart(m[1].split(' · ').map((s) => s.replace(/^!\d\s*/, ''))); }
+    if ((m = text.match(/^🎨 ★5 · VIBE VOTE \(\d+s\): (.+?)\. Chat picks/))) { stars = Math.max(stars, 5); paintHeat(); voteStart(m[1].split(' · ').map((s) => s.replace(/^!\d\s*/, '')), '🎨 Vibe vote · !1 !2 !3'); }
     if (/^🎨 (THEME|Nobody voted)/.test(text)) voteEnd();
     if ((m = text.match(/CHOPPER SIEGE! .*?with (\d+) HP/))) siegeStart(Number(m[1]));
     if (/CHOPPER DOWN!/.test(text)) { siegeEnd(); alert('full', 'Chopper down', 'BOOM', 'The crew shot it down', 4500); }
     if (/The chopper escaped/.test(text)) siegeEnd();
-    if ((m = text.match(/CHAOS VOTE \(\d+s\): (.+?)\. Cheer/))) voteStart(m[1].split(' · ').map((s) => s.replace(/^!\d\s*/, '')));
+    // Crew Vote (non-binding fun question) — older "CHAOS VOTE" messages still parse
+    if ((m = text.match(/(?:CHAOS|CREW) VOTE \(\d+s\): (?:(.+?) — )?(.+?)\. (?:Just for fun|Cheer)/))) voteStart(m[2].split(' · ').map((s) => s.replace(/^!\d\s*/, '')), `🗳️ ${m[1] || 'Crew vote'} · !1 !2 !3`);
     if (/Chat has spoken|Nobody voted/.test(text)) voteEnd();
     if ((m = text.match(/CREW DROP from (.+?)!/))) dropStart(m[1], 10);
     if (/Crew Drop cleared/.test(text)) dropEnd();
@@ -540,7 +542,7 @@
     chat('turbo_tara', 'cheer500 eat this', 9000, ';bits=500');
     [1, 2, 3, 4].forEach((i) => chat(`hitter${i}`, '!hit', 9500 + i * 300));
     say('⭐ vicekid → 3-Star Wanted · vicekid climbed to 3-Star Wanted. Keep chatting, legend.', 12000);
-    say('🗳️ CHAOS VOTE (60s): !1 No brakes for 2 minutes · !2 Steal a bus and drive it like a sports car · !3 Jump off the tallest building in sight. Cheer 10 bits for an extra vote, subs count double!', 15000);
+    say('🗳️ CREW VOTE (60s): Nickname for the current ride? — !1 Neon Bullet · !2 Grandma’s Rocket · !3 Vice Bandit. Just for fun, nobody’s forced! Cheer 10 bits for an extra vote, subs count double!', 15000);
     [['a', '!1'], ['b', '!2'], ['c', '!2'], ['d', '!3']].forEach(([u, v], i) => chat(`voter_${u}`, v, 16000 + i * 400, i === 1 ? ';badges=subscriber/1' : ''));
     say('🌡️ ★3 · DOUBLE NEON CASH for 3 minutes! Every chat message pays twice. Next: ★4 Heat Bet', 21000);
     say('🚓 turbo_tara · sirens on for turbo_tara!', 22500);
