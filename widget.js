@@ -152,9 +152,10 @@
   #cg .burst { position:absolute; width:16px; height:16px; border-radius:50%; animation:cg-burst 1.4s ease-out forwards; }
   @keyframes cg-burst { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0} }
   @keyframes cg-pop { from{opacity:0;transform:translateX(-50%) scale(.4)} to{opacity:1;transform:translateX(-50%) scale(1)} }
-  /* WANTED poster: pops in, then slowly slips down the wall with a slight swing, fading as it goes (8 s total) */
-  #cg .poster { animation:cg-pop2 .5s cubic-bezier(.2,1.5,.3,1) both, cg-slip 7.5s .5s cubic-bezier(.45,0,.55,1) both; }
-  @keyframes cg-pop2 { from{opacity:0;transform:rotate(3deg) scale(.4)} to{opacity:1;transform:rotate(3deg) scale(1)} }
+  /* WANTED poster: SLAMS onto the screen (big + tilted -> overshoot -> settle), then slowly slips down the wall and fades (8 s) */
+  #cg .poster { animation:cg-slam-poster .42s cubic-bezier(.55,0,.75,.3) both, cg-slip 7.5s .5s cubic-bezier(.45,0,.55,1) both; }
+  @keyframes cg-slam-poster { 0%{opacity:0;transform:rotate(-14deg) scale(2.8)} 60%{opacity:1;transform:rotate(5deg) scale(.92)}
+    80%{transform:rotate(2deg) scale(1.04)} 100%{opacity:1;transform:rotate(3deg) scale(1)} }
   @keyframes cg-slip { 0%{opacity:1;transform:translateY(0) rotate(3deg)} 30%{transform:translateY(40px) rotate(-1deg)} 60%{transform:translateY(110px) rotate(2.5deg)}
     88%{opacity:1;transform:translateY(190px) rotate(-.5deg)} 100%{opacity:0;transform:translateY(230px) rotate(1deg)} }
   /* Session stats card: deliberately quiet (no glow pulse), bottom-right under chat, clear of the GTA minimap */
@@ -267,21 +268,35 @@
   // ---------------- effects (Bits menu, subs, Spotlight) ----------------
   let audioCtx = null;
   const tone = (fn) => { try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); fn(audioCtx); } catch { /* sound is optional */ } };
-  // soft two-tone "nee-naw": rounded triangle wave, low volume, highs filtered, gentle fade in/out (owner: old one was harsh)
-  const siren = () => tone((ac) => {
-    const t = ac.currentTime, dur = 1.4;
-    const o = ac.createOscillator(), f = ac.createBiquadFilter(), g = ac.createGain();
-    o.type = 'triangle'; f.type = 'lowpass'; f.frequency.value = 1400; f.Q.value = 0.4;
-    for (let i = 0; i < 4; i++) o.frequency.setValueAtTime(i % 2 ? 523 : 698, t + i * 0.35);   // C5 / F5, alternating
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.035, t + 0.08);
-    g.gain.setValueAtTime(0.035, t + dur - 0.35); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(f).connect(g).connect(ac.destination); o.start(t); o.stop(t + dur + 0.05);
+  // No siren sounds (owner didn't like them). 100 bits = a short, soft "police radio chirp": two quick filtered blips.
+  const chirp = () => tone((ac) => {
+    const t = ac.currentTime;
+    [0, 0.13].forEach((d, i) => {
+      const o = ac.createOscillator(), f = ac.createBiquadFilter(), g = ac.createGain();
+      o.type = 'triangle'; f.type = 'lowpass'; f.frequency.value = 2200;
+      o.frequency.setValueAtTime(i ? 1046 : 1318, t + d); o.frequency.exponentialRampToValueAtTime(i ? 880 : 1046, t + d + 0.08);
+      g.gain.setValueAtTime(0.0001, t + d); g.gain.exponentialRampToValueAtTime(0.03, t + d + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d + 0.1);
+      o.connect(f).connect(g).connect(ac.destination); o.start(t + d); o.stop(t + d + 0.12);
+    });
+  });
+  // WANTED poster slam: deep thud (falling sine) + a short paper slap (filtered noise)
+  const thud = () => tone((ac) => {
+    const t = ac.currentTime + 0.25;                       // lands as the poster hits
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.35);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.16, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+    o.connect(g).connect(ac.destination); o.start(t); o.stop(t + 0.45);
+    const n = ac.createBuffer(1, Math.floor(ac.sampleRate * 0.12), ac.sampleRate), ch = n.getChannelData(0);
+    for (let i = 0; i < ch.length; i++) ch[i] = (Math.random() * 2 - 1) * (1 - i / ch.length);
+    const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g2 = ac.createGain();
+    s.buffer = n; f.type = 'bandpass'; f.frequency.value = 1200; f.Q.value = 0.8; g2.gain.value = 0.05;
+    s.connect(f).connect(g2).connect(ac.destination); s.start(t);
   });
   const chime = () => tone((ac) => { const t = ac.currentTime; [880, 1320, 1760].forEach((f, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f;
     g.gain.setValueAtTime(0.05, t + i * 0.08); g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.08 + 0.5); o.connect(g).connect(ac.destination); o.start(t + i * 0.08); o.stop(t + i * 0.08 + 0.5); }); });
   const fxLayer = () => $('[data-fx]');
   const tmp = (el, ms) => { fxLayer().appendChild(el); setTimeout(() => el.remove(), ms); };
-  const fxSiren = () => { const d = document.createElement('div'); d.className = 'siren'; tmp(d, 3000); siren(); };
+  const fxSiren = () => { const d = document.createElement('div'); d.className = 'siren'; tmp(d, 3000); chirp(); };
   const fxBubble = (name, msg) => { const d = document.createElement('div'); d.className = 'bubble'; d.innerHTML = `<b>${esc(name)}</b>${esc(msg)}`; tmp(d, 8000); chime(); };
   let EMOTES = [];
   const fxRain = (n = 36, pool) => {
@@ -294,7 +309,7 @@
     }
     chime();
   };
-  const fxPoster = (name) => { const d = document.createElement('div'); d.className = 'poster'; d.innerHTML = `<div class="w">WANTED</div><div class="r">MOST WANTED IN VICE CITY</div><div class="n">${esc(name)}</div><div class="r">★★★★★★ · REWARD: RESPECT</div>`; tmp(d, 8100); siren(); };   // 8 s: pops in, slips down the wall, fades (owner-requested)
+  const fxPoster = (name) => { const d = document.createElement('div'); d.className = 'poster'; d.innerHTML = `<div class="w">WANTED</div><div class="r">MOST WANTED IN VICE CITY</div><div class="n">${esc(name)}</div><div class="r">★★★★★★ · REWARD: RESPECT</div>`; tmp(d, 8100); thud(); setTimeout(shake, 250); };   // 8 s: slams in (thud + screen shake), slips down the wall, fades (owner-requested)
   const fxBurst = (x, y, n = 40, colors = ['#ff2e88', '#19e3ff', '#ffd25e', '#7a3cff']) => {
     for (let i = 0; i < n; i++) { const d = document.createElement('div'); d.className = 'burst'; const a = Math.random() * Math.PI * 2, r = 120 + Math.random() * 380;
       d.style.left = `${x}px`; d.style.top = `${y}px`; d.style.background = colors[i % colors.length]; d.style.setProperty('--dx', `${Math.cos(a) * r}px`); d.style.setProperty('--dy', `${Math.sin(a) * r}px`); tmp(d, 1500); }
