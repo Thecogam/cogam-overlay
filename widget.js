@@ -413,6 +413,13 @@
     else if ((m = text.match(/^🌧️ (\S+) ·/))) fxRain();
     else if ((m = text.match(/^🚨 WANTED (\S+) ·/))) fxPoster(m[1]);
     else if (/^🎯 SUB GOAL COMPLETE/.test(text)) { alert('full', 'Sub goal complete', 'GOAL!', text.replace(/^.*Unlocked: /, '').replace(/\. The crew.*$/, ''), 6000); fxBurst(960, 540, 80); }
+    // Games v2
+    else if ((m = text.match(/^🎱 BINGO (\S+) ·/))) { alert('medium', 'Launch Bingo', `BINGO · ${m[1]}`, '3 in a row · Neon Cash payout'); fxBurst(960, 600, 50, ['#ffd25e', '#ff2e88', '#19e3ff']); chime(); }
+    else if ((m = text.match(/^🎱 Bingo square: "(.+?)"/))) alert('toast', 'Bingo square', `✅ ${m[1]} · type !bingo`, '', 3500);
+    else if (/^🏁 MISSION BET is live/.test(text)) alert('small', 'Mission bet', 'Bet your channel points', 'Done in under 10 minutes?');
+    else if ((m = text.match(/^🏁 Mission done in ([\d.]+) minutes: (YES|NO)/))) alert('small', 'Mission bet settled', `${m[2]} wins`, `${m[1]} minutes`);
+    else if ((m = text.match(/^🎲 (DEATHS|CRASHES) POOL: final count (\d+)\. Winners?: (.+)$/))) alert('medium', `${m[1].toLowerCase()} pool · ${m[2]}`, m[3].split(' (')[0], 'closest guess takes the pot');
+    else if ((m = text.match(/^🏆 Quote of the stream: "(.+?)"/))) alert('medium', 'Quote of the stream', `“${m[1].slice(0, 60)}”`, 'Into the Hall of Fame');
     if ((m = text.match(/^🎨 ★5 · VIBE VOTE \(\d+s\): (.+?)\. Chat picks/))) { stars = Math.max(stars, 5); paintHeat(); voteStart(m[1].split(' · ').map((s) => s.replace(/^!\d\s*/, ''))); }
     if (/^🎨 (THEME|Nobody voted)/.test(text)) voteEnd();
     if ((m = text.match(/CHOPPER SIEGE! .*?with (\d+) HP/))) siegeStart(Number(m[1]));
