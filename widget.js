@@ -263,9 +263,16 @@
   // ---------------- effects (Bits menu, subs, Spotlight) ----------------
   let audioCtx = null;
   const tone = (fn) => { try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); fn(audioCtx); } catch { /* sound is optional */ } };
-  const siren = () => tone((ac) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sawtooth'; const t = ac.currentTime;
-    for (let i = 0; i < 4; i++) { o.frequency.setValueAtTime(620, t + i * 0.5); o.frequency.linearRampToValueAtTime(960, t + i * 0.5 + 0.25); o.frequency.linearRampToValueAtTime(620, t + i * 0.5 + 0.5); }
-    g.gain.setValueAtTime(0.06, t); g.gain.linearRampToValueAtTime(0, t + 2); o.connect(g).connect(ac.destination); o.start(t); o.stop(t + 2); });
+  // soft two-tone "nee-naw": rounded triangle wave, low volume, highs filtered, gentle fade in/out (owner: old one was harsh)
+  const siren = () => tone((ac) => {
+    const t = ac.currentTime, dur = 1.4;
+    const o = ac.createOscillator(), f = ac.createBiquadFilter(), g = ac.createGain();
+    o.type = 'triangle'; f.type = 'lowpass'; f.frequency.value = 1400; f.Q.value = 0.4;
+    for (let i = 0; i < 4; i++) o.frequency.setValueAtTime(i % 2 ? 523 : 698, t + i * 0.35);   // C5 / F5, alternating
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.035, t + 0.08);
+    g.gain.setValueAtTime(0.035, t + dur - 0.35); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(f).connect(g).connect(ac.destination); o.start(t); o.stop(t + dur + 0.05);
+  });
   const chime = () => tone((ac) => { const t = ac.currentTime; [880, 1320, 1760].forEach((f, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f;
     g.gain.setValueAtTime(0.05, t + i * 0.08); g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.08 + 0.5); o.connect(g).connect(ac.destination); o.start(t + i * 0.08); o.stop(t + i * 0.08 + 0.5); }); });
   const fxLayer = () => $('[data-fx]');
