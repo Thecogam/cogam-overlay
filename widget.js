@@ -137,7 +137,7 @@
   #cg .heat .crew { font-family:Barlow,sans-serif; font-size:15px; color:#c9f6ff; white-space:nowrap; max-width:560px; overflow:hidden; text-overflow:ellipsis; }
   #cg .goal .sub { display:grid; gap:6px; margin-top:4px; padding-top:8px; border-top:1px solid rgba(255,255,255,.12); }
   #cg .goal .sub .bar > span { background:linear-gradient(90deg,var(--violet),var(--cyan)); box-shadow:0 0 12px var(--cyan); }
-  #cg .goal .sub .num { font-size:15px; } #cg .goal .sub .rw { font-family:Barlow,sans-serif; font-size:14px; color:#c9f6ff; }
+  #cg .goal .sub .num { font-size:15px; } #cg .goal .sub .rw { font-family:Barlow,sans-serif; font-size:14px; color:#c9f6ff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   /* effects layer (Bits menu, subs, Spotlight) */
   #cg .fx { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
   #cg .siren { position:absolute; inset:0; animation:cg-siren .35s steps(2) 8; mix-blend-mode:screen; }
@@ -153,6 +153,12 @@
   @keyframes cg-burst { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0} }
   @keyframes cg-pop { from{opacity:0;transform:translateX(-50%) scale(.4)} to{opacity:1;transform:translateX(-50%) scale(1)} }
   #cg .poster { --tx:0; } #cg .poster { animation-name:cg-pop2; } @keyframes cg-pop2 { from{opacity:0;transform:rotate(3deg) scale(.4)} to{opacity:1;transform:rotate(3deg) scale(1)} }
+  /* Session stats card: deliberately quiet (no glow pulse), bottom-right under chat, clear of the GTA minimap */
+  #cg .stats { position:absolute; right:44px; top:846px; width:380px; padding:8px 14px; display:flex; justify-content:space-between; align-items:center;
+    border:2px solid rgba(25,227,255,.45); border-radius:14px; background:rgba(12,7,32,.5); opacity:.78; font-size:15px; color:#d9cdf5; font-variant-numeric:tabular-nums; }
+  #cg .stats span { display:flex; gap:5px; align-items:center; white-space:nowrap; } #cg .stats b { color:#fff; font-weight:700; }
+  #cg .stats.bump { animation:cg-statbump .6s ease-out; } @keyframes cg-statbump { 0%{opacity:1;border-color:var(--gold)} 100%{opacity:.78} }
+  #cg .hint { font-size:12px; letter-spacing:.12em; color:var(--cyan); text-shadow:none; opacity:.85; margin-left:auto; text-transform:none; }
   /* Vibe themes (chat-picked at ★5) */
   #cg.theme-vice-sunset { --pink:#ff6a3d; --orange:#ffb347; --cyan:#ff4fa3; --gold:#ffe17a; --violet:#c13cff; }
   #cg.theme-neon-storm { --pink:#7a3cff; --orange:#19e3ff; --cyan:#00ffb3; --gold:#e7ff4f; --violet:#3c7aff; }
@@ -167,11 +173,12 @@
   root.innerHTML = `
     <div class="frame"></div><div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
     <div class="brand"><div class="the">the</div><div class="word"><span>C</span><span>O</span><span>G</span><span>A</span><span>M</span></div></div>
-    <div class="goal tube"><div class="title"><i>★</i><span data-goal-label>Follower goal</span></div><div class="bar"><span data-goal-bar></span></div><div class="num"><span><b data-goal-now>–</b> / <span data-goal-target>–</span></span><span>today</span></div>
-      <div class="sub hide" data-subgoal><div class="num"><span>🎯 Sub goal <b data-sg-now>0</b> / <span data-sg-target>–</span></span></div><div class="bar"><span data-sg-bar></span></div><div class="rw" data-sg-reward></div></div></div>
+    <div class="goal tube"><div class="title"><i>★</i><span data-goal-label>Follower goal</span><span class="hint">hit follow ♥</span></div><div class="bar"><span data-goal-bar></span></div><div class="num"><span><b data-goal-now>–</b> / <span data-goal-target>–</span></span><span>today</span></div>
+      <div class="sub hide" data-subgoal><div class="num"><span>🎯 Sub goal <b data-sg-now>0</b> / <span data-sg-target>–</span></span><span class="hint">subs + gifts · !support</span></div><div class="bar"><span data-sg-bar></span></div><div class="rw" data-sg-reward></div></div></div>
     <div class="heat tube"><div class="title" style="font-size:14px">Chat heat · !heat</div><div class="stars" data-heat>${starRow()}</div><div class="next" data-next></div><div class="crew" data-crew></div></div>
-    <div class="lb tube c"><div class="title"><i>★</i>Top crew</div><ol data-lb><li><span class="p">–</span><span>Crew loading…</span><span class="r"></span></li></ol></div>
-    <div class="chat tube"><div class="title"><i>★</i>Chat</div><div class="list" data-chat></div></div>
+    <div class="lb tube c"><div class="title"><i>★</i>Top crew<span class="hint">chat = XP · !rank</span></div><ol data-lb><li><span class="p">–</span><span>Crew loading…</span><span class="r"></span></li></ol></div>
+    <div class="chat tube"><div class="title"><i>★</i>Chat<span class="hint">new? type !help</span></div><div class="list" data-chat></div></div>
+    <div class="stats hide" data-stats><span title="time live">⏱ <b data-st-time>0:00</b></span><span title="deaths">💀 <b data-st-deaths>0</b></span><span title="crashes">💥 <b data-st-crashes>0</b></span><span title="Heat record">🔥 <b data-st-heat>0</b>★</span><span title="Spotlights">🔦 <b data-st-spot>0</b></span></div>
     <div class="ticker tube c"><span class="tag">Latest</span><span class="item" data-ticker>Welcome to the stream</span></div>
     <div class="games">
       <div class="card tube c siege hide" data-siege><div class="k">🚁 Chopper siege · !hit</div><div class="hp"><span data-hp style="width:100%"></span></div><div class="s" data-hp-text></div></div>
@@ -275,6 +282,25 @@
     for (let i = 0; i < n; i++) { const d = document.createElement('div'); d.className = 'burst'; const a = Math.random() * Math.PI * 2, r = 120 + Math.random() * 380;
       d.style.left = `${x}px`; d.style.top = `${y}px`; d.style.background = colors[i % colors.length]; d.style.setProperty('--dx', `${Math.cos(a) * r}px`); d.style.setProperty('--dy', `${Math.sin(a) * r}px`); tmp(d, 1500); }
   };
+  // game cards always start just below the goal panel (it grows when the sub goal bar appears)
+  const placeGames = () => { const g = $('.goal'); $('.games').style.top = `${g.offsetTop + g.offsetHeight + 10}px`; };
+  setTimeout(placeGames, 500);
+  // session stats card (data.json gives the baseline; bot messages update it instantly)
+  const ST = { startedAt: 0, deaths: 0, crashes: 0, heat: 0, spot: 0, live: false };
+  const paintStats = (bump) => {
+    const el = $('[data-stats]');
+    if (!ST.live && !DEMO) { el.classList.add('hide'); return; }
+    el.classList.remove('hide');
+    $('[data-st-deaths]').textContent = ST.deaths; $('[data-st-crashes]').textContent = ST.crashes;
+    $('[data-st-heat]').textContent = Math.max(ST.heat, stars); $('[data-st-spot]').textContent = ST.spot;
+    if (bump) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+  };
+  setInterval(() => {
+    if (!ST.startedAt) return;
+    const s = Math.max(0, Math.floor((Date.now() - ST.startedAt) / 1000));
+    $('[data-st-time]').textContent = `${Math.floor(s / 3600)}:${String(Math.floor(s / 60) % 60).padStart(2, '0')}`;
+    ST.heat = Math.max(ST.heat, stars); $('[data-st-heat]').textContent = ST.heat;
+  }, 1000);
   const applyTheme = (id) => { root.classList.remove('theme-vice-sunset', 'theme-neon-storm', 'theme-night-drive'); root.classList.add(`theme-${id}`); };
 
   // how-to tips rotate in the ticker when nothing else is happening
@@ -344,8 +370,11 @@
       const crew = (text.match(/Crew that lit it up: (.+?)\./) || [])[1] || 'the whole chat';
       alert('full', '★6 · Spotlight mode', 'SPOTLIGHT', `Lit up by ${crew}`, 6000);
       fxBurst(960, 540, 70); fxRain(30, ['⭐', '🔥', '💜', '🌴']); setTimeout(() => { boost = 0; }, 6000);
+      ST.spot++; ST.heat = 6; paintStats(true);
     }
     else if (text.startsWith('📸')) alert('toast', 'Crew photo', 'Photo-mode shot for the Spotlight crew 📸', '', 5000);
+    else if ((m = text.match(/^💀 Death #(\d+)/))) { ST.deaths = Number(m[1]); paintStats(true); }
+    else if ((m = text.match(/^💥 Crash #(\d+)/))) { ST.crashes = Number(m[1]); paintStats(true); }
     else if ((m = text.match(/^🎨 THEME ([\w-]+) ·/))) { applyTheme(m[1]); alert('small', 'Vibe picked by chat', m[1].replace(/-/g, ' ').toUpperCase(), 'New overlay vibe'); }
     else if ((m = text.match(/^🚓 (\S+) ·/))) fxSiren();
     else if ((m = text.match(/^💬 (\S+): (.+)$/))) fxBubble(m[1], m[2]);
@@ -438,6 +467,16 @@
         $('[data-sg-bar]').style.width = `${Math.min(100, d.subGoal.current / d.subGoal.target * 100)}%`;
         $('[data-sg-reward]').textContent = `→ ${d.subGoal.reward}`;
       }
+      placeGames();
+      ST.live = Boolean(d.live && d.stats);
+      if (d.stats) {
+        const started = d.stats.startedAt ? Date.parse(d.stats.startedAt) : ST.startedAt;
+        if (started && ST.startedAt && started !== ST.startedAt) Object.assign(ST, { deaths: 0, crashes: 0, heat: 0, spot: 0 });   // new stream
+        ST.startedAt = started;
+        ST.deaths = Math.max(ST.deaths, d.stats.deaths || 0); ST.crashes = Math.max(ST.crashes, d.stats.crashes || 0);
+        ST.heat = Math.max(ST.heat, d.stats.heatRecord || 0); ST.spot = Math.max(ST.spot, d.stats.spotlights || 0);
+      }
+      paintStats(false);
       if (Array.isArray(d.emotes) && d.emotes.length) EMOTES = d.emotes;
       if (Array.isArray(d.tips) && d.tips.length) TIPS = d.tips;
       if (Array.isArray(d.top)) $('[data-lb]').innerHTML = d.top.length
@@ -451,6 +490,8 @@
   if (DEMO) {
     const say = (s, d) => setTimeout(() => onLine(`@display-name=CogamCrew :thecogam!thecogam@thecogam.tmi.twitch.tv PRIVMSG #${CHANNEL} :${BOT} ${s}`), d);
     const chat = (n, s, d, extra = '') => setTimeout(() => onLine(`@display-name=${n};color=#ff8fc4${extra} :${n.toLowerCase()}!x@x.tmi.twitch.tv PRIVMSG #${CHANNEL} :${s}`), d);
+    Object.assign(ST, { startedAt: Date.now() - 3_725_000, deaths: 3, crashes: 1, heat: 4, spot: 0 }); paintStats(false);
+    say('💀 Death #4. Gravity wins again.', 18000);
     ['NO WAY', 'lets go', 'that jump was insane', 'W', 'clip it'].forEach((s, i) => chat(`viewer${i}`, s, 800 + i * 500));
     say('➕ nightrider_77 · New follower: nightrider_77! That\'s one more witness to the driving.', 3000);
     say('🚁 CHOPPER SIEGE! A police chopper is circling with 2000 HP. Type !hit to shoot it down, cheers and subs deal massive damage. 3 minutes!', 7000);
