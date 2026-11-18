@@ -421,6 +421,12 @@
     else if ((m = text.match(/^🏁 Mission done in ([\d.]+) minutes: (YES|NO)/))) alert('small', 'Mission bet settled', `${m[2]} wins`, `${m[1]} minutes`);
     else if ((m = text.match(/^🎲 (DEATHS|CRASHES) POOL: final count (\d+)\. Winners?: (.+)$/))) alert('medium', `${m[1].toLowerCase()} pool · ${m[2]}`, m[3].split(' (')[0], 'closest guess takes the pot');
     else if ((m = text.match(/^🏆 Quote of the stream: "(.+?)"/))) alert('medium', 'Quote of the stream', `“${m[1].slice(0, 60)}”`, 'Into the Hall of Fame');
+    // channel-point rewards (show-only)
+    else if ((m = text.match(/^🚗 (\S+) named the ride: "(.+?)"/))) alert('small', `Ride named by ${m[1]}`, `🚗 ${m[2]}`, 'just for fun');
+    else if ((m = text.match(/^💧 (\S+) says hydrate/))) alert('toast', 'Pit stop', `💧 ${m[1]}: hydrate!`, '', 3500);
+    else if ((m = text.match(/^🪑 Posture check from (\S+)/))) alert('toast', 'Posture check', `🪑 from ${m[1]}`, '', 3500);
+    else if ((m = text.match(/^🕒 (\S+) clocked in/))) alert('toast', 'Clocked in', `🕒 ${m[1]}`, '', 2500);
+    else if ((m = text.match(/^🎟️ (\S+) redeemed (.+?)(?::|$)/))) alert('toast', 'Channel points', `🎟️ ${m[1]} · ${m[2].slice(0, 40)}`, '', 3500);
     if ((m = text.match(/^🎨 ★5 · VIBE VOTE \(\d+s\): (.+?)\. Chat picks/))) { stars = Math.max(stars, 5); paintHeat(); voteStart(m[1].split(' · ').map((s) => s.replace(/^!\d\s*/, '')), '🎨 Vibe vote · !1 !2 !3'); }
     if (/^🎨 (THEME|Nobody voted)/.test(text)) voteEnd();
     if ((m = text.match(/CHOPPER SIEGE! .*?with (\d+) HP/))) siegeStart(Number(m[1]));
