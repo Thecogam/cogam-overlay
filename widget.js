@@ -152,7 +152,7 @@
   #cg .burst { position:absolute; width:16px; height:16px; border-radius:50%; animation:cg-burst 1.4s ease-out forwards; }
   @keyframes cg-burst { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0} }
   @keyframes cg-pop { from{opacity:0;transform:translateX(-50%) scale(.4)} to{opacity:1;transform:translateX(-50%) scale(1)} }
-  #cg .poster { --tx:0; } #cg .poster { animation-name:cg-pop2; } @keyframes cg-pop2 { from{opacity:0;transform:rotate(3deg) scale(.4)} to{opacity:1;transform:rotate(3deg) scale(1)} }
+  #cg .poster { --tx:0; } #cg .poster { animation-name:cg-pop2; } #cg .poster.out { animation:cg-out .6s both; } @keyframes cg-pop2 { from{opacity:0;transform:rotate(3deg) scale(.4)} to{opacity:1;transform:rotate(3deg) scale(1)} }
   /* Session stats card: deliberately quiet (no glow pulse), bottom-right under chat, clear of the GTA minimap */
   #cg .stats { position:absolute; right:44px; top:846px; width:380px; padding:8px 14px; display:flex; justify-content:space-between; align-items:center;
     border:2px solid rgba(25,227,255,.45); border-radius:14px; background:rgba(12,7,32,.5); opacity:.78; font-size:15px; color:#d9cdf5; font-variant-numeric:tabular-nums; }
