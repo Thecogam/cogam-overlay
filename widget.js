@@ -290,7 +290,7 @@
     }
     chime();
   };
-  const fxPoster = (name) => { const d = document.createElement('div'); d.className = 'poster'; d.innerHTML = `<div class="w">WANTED</div><div class="r">MOST WANTED IN VICE CITY</div><div class="n">${esc(name)}</div><div class="r">★★★★★★ · REWARD: RESPECT</div>`; tmp(d, 20000); siren(); };
+  const fxPoster = (name) => { const d = document.createElement('div'); d.className = 'poster'; d.innerHTML = `<div class="w">WANTED</div><div class="r">MOST WANTED IN VICE CITY</div><div class="n">${esc(name)}</div><div class="r">★★★★★★ · REWARD: RESPECT</div>`; tmp(d, 8000); setTimeout(() => d.classList.add('out'), 7400); siren(); };   // 8 s on screen, fades out (owner: 20 s was too long)
   const fxBurst = (x, y, n = 40, colors = ['#ff2e88', '#19e3ff', '#ffd25e', '#7a3cff']) => {
     for (let i = 0; i < n; i++) { const d = document.createElement('div'); d.className = 'burst'; const a = Math.random() * Math.PI * 2, r = 120 + Math.random() * 380;
       d.style.left = `${x}px`; d.style.top = `${y}px`; d.style.background = colors[i % colors.length]; d.style.setProperty('--dx', `${Math.cos(a) * r}px`); d.style.setProperty('--dy', `${Math.sin(a) * r}px`); tmp(d, 1500); }
