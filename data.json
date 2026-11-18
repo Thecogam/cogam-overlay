@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-18T07:42:17.961Z",
+ "updatedAt": "2026-11-18T08:06:25.114Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -7,5 +7,38 @@
   "target": 150
  },
  "top": [],
- "latest": []
+ "latest": [],
+ "subGoal": {
+  "current": 0,
+  "target": 10,
+  "reward": "Community special stream (free-roam, you pick the activities)"
+ },
+ "emotes": [
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_18dd49391aee4ea6b5df15e98b3a7d53/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_e6a1c7774d9b4a65b301a8e9eddae5b1/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_20b502bf48ea485e8c06c1305fe767f3/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_034f90d6163d41f486324bb4de578f7a/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_1dda68601fe940ac9dc8fe2fdb1a153b/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_f1068ff189c443fbba9e331b681785b6/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_28217db105234e3d90faf7bb24788d7b/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_afbeab70eec34f4cbe99513930da8124/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_710070b8aea840f9af84a7c62bf42231/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_962030c4282a4bb6ba2730104b0351da/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_5651e3cebdfc49d4b45dabe60314a9c2/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_1af344fc845e48afa32497d256c23c67/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_ccf6556c6be645e589034a91192351b0/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_4b6ec8a8d1664f8c875b9d441fa072c4/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_f9191c77cb7548408d39fb06e970c2f5/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_03f903b1775141758fd93a9cfa5b822b/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_da704747b6ff44a995d321ed6f20e3ea/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_c3266455211d4c39b736d6d93b8c5eb4/static/light/2.0",
+  "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_e66b384e8860455d83b7724ce97c4afb/static/light/2.0"
+ ],
+ "tips": [
+  "Chat fast + hype words + support = HEAT ★ · type !heat",
+  "★6 HEAT = SPOTLIGHT MODE: top crew credited on screen + clipped",
+  "Bits: 100 🚓 · 300 💬 · 500 🌧️ · 1000 🚨 · type !support",
+  "Games pop up on the left · type !games",
+  "Neon Cash = your XP · climb 6 star ranks · type !rank"
+ ]
 }
