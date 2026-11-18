@@ -152,7 +152,11 @@
   #cg .burst { position:absolute; width:16px; height:16px; border-radius:50%; animation:cg-burst 1.4s ease-out forwards; }
   @keyframes cg-burst { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0} }
   @keyframes cg-pop { from{opacity:0;transform:translateX(-50%) scale(.4)} to{opacity:1;transform:translateX(-50%) scale(1)} }
-  #cg .poster { --tx:0; } #cg .poster { animation-name:cg-pop2; } #cg .poster.out { animation:cg-out .6s both; } @keyframes cg-pop2 { from{opacity:0;transform:rotate(3deg) scale(.4)} to{opacity:1;transform:rotate(3deg) scale(1)} }
+  /* WANTED poster: pops in, then slowly slips down the wall with a slight swing, fading as it goes (8 s total) */
+  #cg .poster { animation:cg-pop2 .5s cubic-bezier(.2,1.5,.3,1) both, cg-slip 7.5s .5s cubic-bezier(.45,0,.55,1) both; }
+  @keyframes cg-pop2 { from{opacity:0;transform:rotate(3deg) scale(.4)} to{opacity:1;transform:rotate(3deg) scale(1)} }
+  @keyframes cg-slip { 0%{opacity:1;transform:translateY(0) rotate(3deg)} 30%{transform:translateY(40px) rotate(-1deg)} 60%{transform:translateY(110px) rotate(2.5deg)}
+    88%{opacity:1;transform:translateY(190px) rotate(-.5deg)} 100%{opacity:0;transform:translateY(230px) rotate(1deg)} }
   /* Session stats card: deliberately quiet (no glow pulse), bottom-right under chat, clear of the GTA minimap */
   #cg .stats { position:absolute; right:44px; top:846px; width:380px; padding:8px 14px; display:flex; justify-content:space-between; align-items:center;
     border:2px solid rgba(25,227,255,.45); border-radius:14px; background:rgba(12,7,32,.5); opacity:.78; font-size:15px; color:#d9cdf5; font-variant-numeric:tabular-nums; }
@@ -290,7 +294,7 @@
     }
     chime();
   };
-  const fxPoster = (name) => { const d = document.createElement('div'); d.className = 'poster'; d.innerHTML = `<div class="w">WANTED</div><div class="r">MOST WANTED IN VICE CITY</div><div class="n">${esc(name)}</div><div class="r">★★★★★★ · REWARD: RESPECT</div>`; tmp(d, 8000); setTimeout(() => d.classList.add('out'), 7400); siren(); };   // 8 s on screen, fades out (owner: 20 s was too long)
+  const fxPoster = (name) => { const d = document.createElement('div'); d.className = 'poster'; d.innerHTML = `<div class="w">WANTED</div><div class="r">MOST WANTED IN VICE CITY</div><div class="n">${esc(name)}</div><div class="r">★★★★★★ · REWARD: RESPECT</div>`; tmp(d, 8100); siren(); };   // 8 s: pops in, slips down the wall, fades (owner-requested)
   const fxBurst = (x, y, n = 40, colors = ['#ff2e88', '#19e3ff', '#ffd25e', '#7a3cff']) => {
     for (let i = 0; i < n; i++) { const d = document.createElement('div'); d.className = 'burst'; const a = Math.random() * Math.PI * 2, r = 120 + Math.random() * 380;
       d.style.left = `${x}px`; d.style.top = `${y}px`; d.style.background = colors[i % colors.length]; d.style.setProperty('--dx', `${Math.cos(a) * r}px`); d.style.setProperty('--dy', `${Math.sin(a) * r}px`); tmp(d, 1500); }
