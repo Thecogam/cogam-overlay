@@ -131,6 +131,32 @@
   @keyframes cg-bob { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-8px) rotate(4deg)} }
   @keyframes cg-slam { 0%{transform:scale(2.4);opacity:0} 100%{transform:scale(1);opacity:1} }
   @keyframes cg-shake { 0%,100%{translate:0 0} 25%{translate:-10px 6px} 50%{translate:9px -6px} 75%{translate:-5px 3px} }
+  /* Heat meter v2: next unlock + live top contributors */
+  #cg .heat .next { font-size:15px; letter-spacing:.08em; color:#ffd9ea; text-shadow:0 0 6px var(--pink); white-space:nowrap; }
+  #cg .heat .next b { color:var(--gold); }
+  #cg .heat .crew { font-family:Barlow,sans-serif; font-size:15px; color:#c9f6ff; white-space:nowrap; max-width:560px; overflow:hidden; text-overflow:ellipsis; }
+  #cg .goal .sub { display:grid; gap:6px; margin-top:4px; padding-top:8px; border-top:1px solid rgba(255,255,255,.12); }
+  #cg .goal .sub .bar > span { background:linear-gradient(90deg,var(--violet),var(--cyan)); box-shadow:0 0 12px var(--cyan); }
+  #cg .goal .sub .num { font-size:15px; } #cg .goal .sub .rw { font-family:Barlow,sans-serif; font-size:14px; color:#c9f6ff; }
+  /* effects layer (Bits menu, subs, Spotlight) */
+  #cg .fx { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  #cg .siren { position:absolute; inset:0; animation:cg-siren .35s steps(2) 8; mix-blend-mode:screen; }
+  @keyframes cg-siren { 0%{background:linear-gradient(90deg,rgba(255,0,60,.45),transparent 45%,transparent 55%,rgba(0,90,255,0))} 100%{background:linear-gradient(90deg,rgba(255,0,60,0),transparent 45%,transparent 55%,rgba(0,90,255,.45))} }
+  #cg .bubble { position:absolute; left:50%; top:380px; transform:translateX(-50%); max-width:900px; padding:18px 30px; text-align:center; font-family:Barlow,sans-serif; font-size:38px; font-weight:600; color:#fff; background:rgba(12,7,32,.88); border:3px solid var(--cyan); border-radius:22px; box-shadow:0 0 24px var(--cyan); animation:cg-pop .4s cubic-bezier(.2,1.5,.3,1) both; }
+  #cg .bubble b { display:block; font-family:"Chakra Petch",monospace; font-size:22px; letter-spacing:.2em; color:var(--gold); }
+  #cg .drop-emote { position:absolute; top:-120px; width:84px; height:84px; animation:cg-fall linear forwards; filter:drop-shadow(0 0 10px rgba(255,46,136,.6)); font-size:70px; text-align:center; }
+  @keyframes cg-fall { to { transform:translateY(1300px) rotate(220deg); } }
+  #cg .poster { position:absolute; right:470px; top:200px; width:360px; padding:18px; text-align:center; background:#e8d9b5; color:#2b1a0e; border:6px solid #2b1a0e; box-shadow:0 0 40px rgba(255,46,136,.6),0 20px 40px rgba(0,0,0,.6); transform:rotate(3deg); animation:cg-pop .5s cubic-bezier(.2,1.5,.3,1) both; font-family:"Chakra Petch",monospace; }
+  #cg .poster .w { font-family:Impact,sans-serif; font-size:64px; letter-spacing:.06em; color:#8a1010; line-height:1; }
+  #cg .poster .n { font-size:34px; font-weight:700; margin:10px 0; overflow-wrap:anywhere; } #cg .poster .r { font-size:20px; letter-spacing:.2em; }
+  #cg .burst { position:absolute; width:16px; height:16px; border-radius:50%; animation:cg-burst 1.4s ease-out forwards; }
+  @keyframes cg-burst { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0} }
+  @keyframes cg-pop { from{opacity:0;transform:translateX(-50%) scale(.4)} to{opacity:1;transform:translateX(-50%) scale(1)} }
+  #cg .poster { --tx:0; } #cg .poster { animation-name:cg-pop2; } @keyframes cg-pop2 { from{opacity:0;transform:rotate(3deg) scale(.4)} to{opacity:1;transform:rotate(3deg) scale(1)} }
+  /* Vibe themes (chat-picked at ★5) */
+  #cg.theme-vice-sunset { --pink:#ff6a3d; --orange:#ffb347; --cyan:#ff4fa3; --gold:#ffe17a; --violet:#c13cff; }
+  #cg.theme-neon-storm { --pink:#7a3cff; --orange:#19e3ff; --cyan:#00ffb3; --gold:#e7ff4f; --violet:#3c7aff; }
+  #cg.theme-night-drive { --pink:#ff2e88; --orange:#ff8a3d; --cyan:#19e3ff; --gold:#ffd25e; --violet:#7a3cff; }
   @media (prefers-reduced-motion: reduce) { #cg * { animation:none !important; transition:none !important; } }`;
   document.head.appendChild(style);
 
@@ -141,8 +167,9 @@
   root.innerHTML = `
     <div class="frame"></div><div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
     <div class="brand"><div class="the">the</div><div class="word"><span>C</span><span>O</span><span>G</span><span>A</span><span>M</span></div></div>
-    <div class="goal tube"><div class="title"><i>★</i><span data-goal-label>Follower goal</span></div><div class="bar"><span data-goal-bar></span></div><div class="num"><span><b data-goal-now>–</b> / <span data-goal-target>–</span></span><span>today</span></div></div>
-    <div class="heat tube"><div class="title" style="font-size:14px">Chat heat</div><div class="stars" data-heat>${starRow()}</div></div>
+    <div class="goal tube"><div class="title"><i>★</i><span data-goal-label>Follower goal</span></div><div class="bar"><span data-goal-bar></span></div><div class="num"><span><b data-goal-now>–</b> / <span data-goal-target>–</span></span><span>today</span></div>
+      <div class="sub hide" data-subgoal><div class="num"><span>🎯 Sub goal <b data-sg-now>0</b> / <span data-sg-target>–</span></span></div><div class="bar"><span data-sg-bar></span></div><div class="rw" data-sg-reward></div></div></div>
+    <div class="heat tube"><div class="title" style="font-size:14px">Chat heat · !heat</div><div class="stars" data-heat>${starRow()}</div><div class="next" data-next></div><div class="crew" data-crew></div></div>
     <div class="lb tube c"><div class="title"><i>★</i>Top crew</div><ol data-lb><li><span class="p">–</span><span>Crew loading…</span><span class="r"></span></li></ol></div>
     <div class="chat tube"><div class="title"><i>★</i>Chat</div><div class="list" data-chat></div></div>
     <div class="ticker tube c"><span class="tag">Latest</span><span class="item" data-ticker>Welcome to the stream</span></div>
@@ -152,6 +179,7 @@
       <div class="card tube c drop hide" data-drop><div class="k">📦 Crew drop · !grab</div><div class="row"><div class="crate">📦</div><div><div class="h" data-drop-who></div><div class="s"><b data-drop-left>10</b> crates left</div></div></div></div>
       <div class="card tube c quiz hide" data-quiz><div class="k">❓ Trivia · answer in chat</div><div class="h sm" data-quiz-q></div></div>
     </div>
+    <div class="fx" data-fx></div>
     <div data-alerts></div>
     <div class="debug ${DEBUG ? '' : 'hide'}" data-debug>connecting…</div>`;
   document.body.appendChild(root);
@@ -163,7 +191,7 @@
   const show = (el) => { el.classList.remove('hide', 'out'); void el.offsetWidth; el.classList.add('in'); };
   const hide = (el) => { el.classList.remove('in'); el.classList.add('out'); setTimeout(() => { el.classList.add('hide'); el.classList.remove('out'); }, 500); };
   const shake = () => { root.classList.remove('shake'); void root.offsetWidth; root.classList.add('shake'); };
-  const ticker = (t) => { const el = $('[data-ticker]'); el.textContent = t; el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); };
+  const ticker = (t) => { lastTicker = Date.now(); $('.ticker .tag').textContent = 'Latest'; const el = $('[data-ticker]'); el.textContent = t; el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); };
 
   // ---------------- alerts (queued, tiered) ----------------
   const queue = []; let alertBusy = false;
@@ -203,7 +231,56 @@
   let msgs = [], baseline = 0, samples = 0, boost = 0, stars = 0, last = 0;
   const heatEls = [...$('[data-heat]').children];
   const hype = (t) => { const x = ` ${t.toLowerCase()} `; return HYPE.some((w) => (w.length <= 2 ? x.includes(` ${w} `) : x.includes(w))) ? 0.15 : 0; };
-  const paintHeat = () => { heatEls.forEach((s, i) => s.classList.toggle('on', i < stars)); $('.heat').dataset.level = String(stars); };
+  // Heat ladder v2: what the next star unlocks, shown under the meter so viewers always know why to push it
+  const NEXT = ['★1 · sirens on the frame', '★2 · keep it going', '★3 · DOUBLE Neon Cash', '★4 · Heat Bet (channel points)', '★5 · you pick the overlay vibe', '★6 · SPOTLIGHT MODE'];
+  const contrib = new Map();   // display name -> points this run (chat, hype words, bits, subs), computed from public chat
+  const addHeat = (name, pts) => { if (name) contrib.set(name, (contrib.get(name) || 0) + pts); };
+  const paintCrew = () => {
+    const top = [...contrib.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([n]) => n);
+    $('[data-crew]').textContent = top.length ? `🔥 Pushing it: ${top.join(' · ')}` : 'Chat to push the Heat';
+  };
+  const paintHeat = () => {
+    heatEls.forEach((s, i) => s.classList.toggle('on', i < stars)); $('.heat').dataset.level = String(stars);
+    $('[data-next]').innerHTML = stars >= 6 ? '<b>SPOTLIGHT MODE</b> · double XP' : `NEXT: <b>${esc(NEXT[Math.min(5, stars)])}</b>`;
+    paintCrew();
+  };
+  let cold = 0;
+  setInterval(() => { if (stars === 0) { cold += 5; if (cold >= 120) contrib.clear(); } else cold = 0; }, 5000);
+
+  // ---------------- effects (Bits menu, subs, Spotlight) ----------------
+  let audioCtx = null;
+  const tone = (fn) => { try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); fn(audioCtx); } catch { /* sound is optional */ } };
+  const siren = () => tone((ac) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sawtooth'; const t = ac.currentTime;
+    for (let i = 0; i < 4; i++) { o.frequency.setValueAtTime(620, t + i * 0.5); o.frequency.linearRampToValueAtTime(960, t + i * 0.5 + 0.25); o.frequency.linearRampToValueAtTime(620, t + i * 0.5 + 0.5); }
+    g.gain.setValueAtTime(0.06, t); g.gain.linearRampToValueAtTime(0, t + 2); o.connect(g).connect(ac.destination); o.start(t); o.stop(t + 2); });
+  const chime = () => tone((ac) => { const t = ac.currentTime; [880, 1320, 1760].forEach((f, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f;
+    g.gain.setValueAtTime(0.05, t + i * 0.08); g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.08 + 0.5); o.connect(g).connect(ac.destination); o.start(t + i * 0.08); o.stop(t + i * 0.08 + 0.5); }); });
+  const fxLayer = () => $('[data-fx]');
+  const tmp = (el, ms) => { fxLayer().appendChild(el); setTimeout(() => el.remove(), ms); };
+  const fxSiren = () => { const d = document.createElement('div'); d.className = 'siren'; tmp(d, 3000); siren(); };
+  const fxBubble = (name, msg) => { const d = document.createElement('div'); d.className = 'bubble'; d.innerHTML = `<b>${esc(name)}</b>${esc(msg)}`; tmp(d, 8000); chime(); };
+  let EMOTES = [];
+  const fxRain = (n = 36, pool) => {
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement('div'); d.className = 'drop-emote';
+      const src = (pool || EMOTES)[Math.floor(Math.random() * Math.max(1, (pool || EMOTES).length))];
+      if (src && /^https?:/.test(src)) d.innerHTML = `<img src="${esc(src)}" style="width:100%;height:100%">`; else d.textContent = src || ['💜', '🔥', '⭐', '🌴'][i % 4];
+      d.style.left = `${Math.random() * 1840}px`; d.style.animationDuration = `${2.6 + Math.random() * 2.2}s`; d.style.animationDelay = `${Math.random() * 1.5}s`;
+      tmp(d, 7000);
+    }
+    chime();
+  };
+  const fxPoster = (name) => { const d = document.createElement('div'); d.className = 'poster'; d.innerHTML = `<div class="w">WANTED</div><div class="r">MOST WANTED IN VICE CITY</div><div class="n">${esc(name)}</div><div class="r">★★★★★★ · REWARD: RESPECT</div>`; tmp(d, 20000); siren(); };
+  const fxBurst = (x, y, n = 40, colors = ['#ff2e88', '#19e3ff', '#ffd25e', '#7a3cff']) => {
+    for (let i = 0; i < n; i++) { const d = document.createElement('div'); d.className = 'burst'; const a = Math.random() * Math.PI * 2, r = 120 + Math.random() * 380;
+      d.style.left = `${x}px`; d.style.top = `${y}px`; d.style.background = colors[i % colors.length]; d.style.setProperty('--dx', `${Math.cos(a) * r}px`); d.style.setProperty('--dy', `${Math.sin(a) * r}px`); tmp(d, 1500); }
+  };
+  const applyTheme = (id) => { root.classList.remove('theme-vice-sunset', 'theme-neon-storm', 'theme-night-drive'); root.classList.add(`theme-${id}`); };
+
+  // how-to tips rotate in the ticker when nothing else is happening
+  let TIPS = ['Chat fast + hype words + support = HEAT ★ · type !heat', '★6 HEAT = SPOTLIGHT MODE: top crew credited + clipped', 'Bits: 100 🚓 · 300 💬 · 500 🌧️ · 1000 🚨 · type !support', 'Games pop up on the left · type !games', 'Neon Cash = your XP · climb 6 star ranks · type !rank'];
+  let lastTicker = 0, tipIdx = 0;
+  setInterval(() => { if (Date.now() - lastTicker > 20000 && !alertBusy) { const el = $('[data-ticker]'); el.textContent = `💡 ${TIPS[tipIdx++ % TIPS.length]}`; el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); $('.ticker .tag').textContent = 'How to'; } }, 12000);
   setInterval(() => {
     const now = Date.now(), dt = last ? (now - last) / 1000 : 0; last = now;
     boost = Math.max(0, boost - dt / 45);
@@ -259,6 +336,24 @@
     if ((m = text.match(/^➕ (\S+) ·/))) { alert('small', 'New follower', m[1], 'joined the crew'); boost += 0.5; }
     else if ((m = text.match(/^⭐ (\S+) → (.+?) ·/))) alert('toast', 'Rank up', `${m[1]} · ${m[2]}`, '', 3000);
     else if (text.startsWith('🔥')) { stars = 6; paintHeat(); alert('full', 'Chat heat maxed', 'SIX STARS', 'stars', 5000); setTimeout(() => { boost = 0; }, 5000); }
+    // Heat ladder v2 markers from the engine (the engine is the source of truth for unlocks)
+    else if (text.startsWith('🌡️ ★3')) { stars = Math.max(stars, 3); paintHeat(); alert('medium', '★3 unlocked', 'DOUBLE NEON CASH', 'Every message pays twice for 3 minutes'); }
+    else if (text.startsWith('🔮 ★4')) { stars = Math.max(stars, 4); paintHeat(); alert('medium', '★4 unlocked', 'HEAT BET IS LIVE', 'Bet channel points: does chat hit ★6?'); }
+    else if (text.startsWith('🔦 SPOTLIGHT')) {
+      stars = 6; paintHeat();
+      const crew = (text.match(/Crew that lit it up: (.+?)\./) || [])[1] || 'the whole chat';
+      alert('full', '★6 · Spotlight mode', 'SPOTLIGHT', `Lit up by ${crew}`, 6000);
+      fxBurst(960, 540, 70); fxRain(30, ['⭐', '🔥', '💜', '🌴']); setTimeout(() => { boost = 0; }, 6000);
+    }
+    else if (text.startsWith('📸')) alert('toast', 'Crew photo', 'Photo-mode shot for the Spotlight crew 📸', '', 5000);
+    else if ((m = text.match(/^🎨 THEME ([\w-]+) ·/))) { applyTheme(m[1]); alert('small', 'Vibe picked by chat', m[1].replace(/-/g, ' ').toUpperCase(), 'New overlay vibe'); }
+    else if ((m = text.match(/^🚓 (\S+) ·/))) fxSiren();
+    else if ((m = text.match(/^💬 (\S+): (.+)$/))) fxBubble(m[1], m[2]);
+    else if ((m = text.match(/^🌧️ (\S+) ·/))) fxRain();
+    else if ((m = text.match(/^🚨 WANTED (\S+) ·/))) fxPoster(m[1]);
+    else if (/^🎯 SUB GOAL COMPLETE/.test(text)) { alert('full', 'Sub goal complete', 'GOAL!', text.replace(/^.*Unlocked: /, '').replace(/\. The crew.*$/, ''), 6000); fxBurst(960, 540, 80); }
+    if ((m = text.match(/^🎨 ★5 · VIBE VOTE \(\d+s\): (.+?)\. Chat picks/))) { stars = Math.max(stars, 5); paintHeat(); voteStart(m[1].split(' · ').map((s) => s.replace(/^!\d\s*/, ''))); }
+    if (/^🎨 (THEME|Nobody voted)/.test(text)) voteEnd();
     if ((m = text.match(/CHOPPER SIEGE! .*?with (\d+) HP/))) siegeStart(Number(m[1]));
     if (/CHOPPER DOWN!/.test(text)) { siegeEnd(); alert('full', 'Chopper down', 'BOOM', 'The crew shot it down', 4500); }
     if (/The chopper escaped/.test(text)) siegeEnd();
@@ -277,6 +372,7 @@
     const name = t['display-name'] || user;
     chatLine(name, t.color, text, false);
     msgs.push(Date.now()); boost += hype(text);
+    addHeat(name, 1 + (hype(text) ? 1 : 0) + Math.round(Number(t.bits || 0) / 10));
     const bits = Number(t.bits || 0);
     const sub = /(^|,)(subscriber|founder)\//.test(t.badges || '');
     const cmd = text.trim().toLowerCase();
@@ -297,15 +393,15 @@
     if (kind === 'sub' || kind === 'resub') {
       const months = Number(t['msg-param-cumulative-months'] || 1);
       alert('medium', kind === 'sub' ? 'New subscriber' : `Resub · ${months} months`, name, 'Welcome to the crew');
-      boost += 1; siegeDamage(GAME.subDamage);
+      boost += 1; siegeDamage(GAME.subDamage); addHeat(name, 50); fxBurst(960, 620, 50); chime();
     }
     if (kind === 'submysterygift' || kind === 'subgift') {
       const n = Number(t['msg-param-mass-gift-count'] || 1);
       if (kind === 'submysterygift' || !t['msg-param-origin-id']) alert('medium', `${n} gift sub${n > 1 ? 's' : ''}`, name, 'Absolute legend');
       boost += 1;
       // A gift bomb arrives as one submysterygift plus one subgift per recipient (tagged with origin-id): count it once.
-      if (kind === 'submysterygift') siegeDamage(GAME.subDamage * n);
-      else if (!t['msg-param-origin-id']) siegeDamage(GAME.subDamage);
+      if (kind === 'submysterygift') { siegeDamage(GAME.subDamage * n); addHeat(name, 50 * n); if (n >= 5) fxRain(Math.min(60, 12 * n), ['💸', '💵', '💰', '💎']); else fxBurst(960, 620, 40); }
+      else if (!t['msg-param-origin-id']) { siegeDamage(GAME.subDamage); addHeat(name, 50); }
     }
     if (kind === 'raid') { const v = t['msg-param-viewerCount'] || ''; alert('full', 'Incoming raid', 'RAID', `${name} + ${v} riders`, 5000); boost += 2; }
   }
@@ -336,6 +432,14 @@
         $('[data-goal-now]').textContent = d.goal.current; $('[data-goal-target]').textContent = d.goal.target;
         $('[data-goal-bar]').style.width = `${Math.min(100, d.goal.current / d.goal.target * 100)}%`;
       }
+      if (d.subGoal && d.subGoal.target) {
+        show($('[data-subgoal]'));
+        $('[data-sg-now]').textContent = d.subGoal.current; $('[data-sg-target]').textContent = d.subGoal.target;
+        $('[data-sg-bar]').style.width = `${Math.min(100, d.subGoal.current / d.subGoal.target * 100)}%`;
+        $('[data-sg-reward]').textContent = `→ ${d.subGoal.reward}`;
+      }
+      if (Array.isArray(d.emotes) && d.emotes.length) EMOTES = d.emotes;
+      if (Array.isArray(d.tips) && d.tips.length) TIPS = d.tips;
       if (Array.isArray(d.top)) $('[data-lb]').innerHTML = d.top.length
         ? d.top.map((v, i) => `<li><span class="p">${i + 1}</span><span>${esc(v.name)}</span><span class="r">${esc(v.rank.split(' ')[0])}</span></li>`).join('')
         : '<li><span class="p">–</span><span>Chat to join the crew</span><span class="r"></span></li>';
@@ -355,6 +459,11 @@
     say('⭐ vicekid → 3-Star Wanted · vicekid climbed to 3-Star Wanted. Keep chatting, legend.', 12000);
     say('🗳️ CHAOS VOTE (60s): !1 No brakes for 2 minutes · !2 Steal a bus and drive it like a sports car · !3 Jump off the tallest building in sight. Cheer 10 bits for an extra vote, subs count double!', 15000);
     [['a', '!1'], ['b', '!2'], ['c', '!2'], ['d', '!3']].forEach(([u, v], i) => chat(`voter_${u}`, v, 16000 + i * 400, i === 1 ? ';badges=subscriber/1' : ''));
-    say('🔥 SIX STARS! Chat went absolutely feral. Bonus XP for everyone who was here, and the clip is saved!', 20000);
+    say('🌡️ ★3 · DOUBLE NEON CASH for 3 minutes! Every chat message pays twice. Next: ★4 Heat Bet', 21000);
+    say('🚓 turbo_tara · sirens on for turbo_tara!', 22500);
+    say('💬 nightrider_77: first time catching the stream, this overlay is insane', 24000);
+    say('🚨 WANTED vicekid · Most Wanted poster for vicekid! 1000 bits of pure chaos 🙌', 26000);
+    say('🔦 SPOTLIGHT MODE · ★6 reached! Crew that lit it up: turbo_tara, vicekid, nightrider_77. Double XP for 90s, clip incoming!', 32000);
+    if (window.COGAM_DEMO_THEME) say(`🎨 THEME ${window.COGAM_DEMO_THEME} · Chat picked it!`, 1500);
   }
 })();
