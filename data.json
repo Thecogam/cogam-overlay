@@ -1,12 +1,23 @@
 {
- "updatedAt": "2026-11-19T12:08:09.666Z",
- "live": true,
+ "updatedAt": "2026-11-19T13:52:07.211Z",
+ "live": false,
  "goal": {
   "label": "Follower goal",
-  "current": 111,
+  "current": 110,
   "target": 150
  },
- "top": [],
+ "top": [
+  {
+   "name": "OverlayExpert",
+   "xp": 10,
+   "rank": "1-Star Rookie"
+  },
+  {
+   "name": "OWN3D",
+   "xp": 10,
+   "rank": "1-Star Rookie"
+  }
+ ],
  "latest": [],
  "subGoal": {
   "current": 0,
@@ -41,12 +52,5 @@
   "Games pop up on the left · type !games",
   "Neon Cash = your XP · climb 6 star ranks · type !rank"
  ],
- "stats": {
-  "startedAt": "2026-11-19T12:07:49.000Z",
-  "deaths": 0,
-  "crashes": 0,
-  "heatRecord": 0,
-  "spotlights": 0,
-  "chatters": 0
- }
+ "stats": null
 }
