@@ -1,12 +1,22 @@
 {
- "updatedAt": "2026-11-20T17:54:36.491Z",
- "live": true,
+ "updatedAt": "2026-11-21T04:02:15.792Z",
+ "live": false,
  "goal": {
   "label": "Follower goal",
   "current": 110,
   "target": 150
  },
  "top": [
+  {
+   "name": "adamstrange77",
+   "xp": 380,
+   "rank": "2-Star Suspect"
+  },
+  {
+   "name": "StreamStickers",
+   "xp": 320,
+   "rank": "2-Star Suspect"
+  },
   {
    "name": "hideousraytrc",
    "xp": 52,
@@ -47,12 +57,5 @@
   "Games pop up on the left · type !games",
   "Neon Cash = your XP · climb 6 star ranks · type !rank"
  ],
- "stats": {
-  "startedAt": "2026-11-20T17:29:56.000Z",
-  "deaths": 0,
-  "crashes": 0,
-  "heatRecord": 0,
-  "spotlights": 0,
-  "chatters": 0
- }
+ "stats": null
 }
