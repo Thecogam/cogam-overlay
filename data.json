@@ -1,9 +1,9 @@
 {
- "updatedAt": "2026-11-20T15:39:11.452Z",
- "live": false,
+ "updatedAt": "2026-11-20T17:54:36.491Z",
+ "live": true,
  "goal": {
   "label": "Follower goal",
-  "current": 109,
+  "current": 110,
   "target": 150
  },
  "top": [
@@ -47,5 +47,12 @@
   "Games pop up on the left · type !games",
   "Neon Cash = your XP · climb 6 star ranks · type !rank"
  ],
- "stats": null
+ "stats": {
+  "startedAt": "2026-11-20T17:29:56.000Z",
+  "deaths": 0,
+  "crashes": 0,
+  "heatRecord": 0,
+  "spotlights": 0,
+  "chatters": 0
+ }
 }
