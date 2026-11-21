@@ -1,25 +1,35 @@
 {
- "updatedAt": "2026-11-21T09:58:38.447Z",
+ "updatedAt": "2026-11-21T20:33:53.333Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
-  "current": 110,
+  "current": 112,
   "target": 150
  },
  "top": [
   {
    "name": "adamstrange77",
-   "xp": 380,
+   "xp": 724,
    "rank": "2-Star Suspect"
   },
   {
    "name": "StreamStickers",
-   "xp": 320,
+   "xp": 610,
    "rank": "2-Star Suspect"
   },
   {
    "name": "hideousraytrc",
    "xp": 52,
+   "rank": "1-Star Rookie"
+  },
+  {
+   "name": "Lurxx",
+   "xp": 10,
+   "rank": "1-Star Rookie"
+  },
+  {
+   "name": "hamzansadiq",
+   "xp": 6,
    "rank": "1-Star Rookie"
   }
  ],
