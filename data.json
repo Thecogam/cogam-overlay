@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-23T21:18:41.750Z",
+ "updatedAt": "2026-11-24T02:25:26.696Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,12 @@
  "stats": null,
  "promos": [
   {
+   "id": "njVpdT0Ze9g",
+   "title": "Dogfights in GTA 6 Hit Different 🚀 (Stolen Military Jet)",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/njVpdT0Ze9g/hqdefault.jpg"
+  },
+  {
    "id": "G6flVz3T5rY",
    "title": "The Deal Went Wrong... 1 vs The Whole Gang 💀",
    "short": true,
@@ -110,12 +116,6 @@
    "title": "My First Night in GTA 6 Went Sideways Fast",
    "short": false,
    "thumb": "https://i.ytimg.com/vi/04n1jFA6IUI/hqdefault.jpg"
-  },
-  {
-   "id": "DavYivtDq8g",
-   "title": "I Stole a Tow Truck From the Police Impound",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/DavYivtDq8g/hqdefault.jpg"
   }
  ],
  "yt": "youtube.com/@thecogam"
