@@ -58,6 +58,14 @@
   #cg .card .k { font-size:13px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); }
   #cg .card .h { font-size:20px; font-weight:700; color:#ffd9ea; text-shadow:0 0 6px var(--pink); }
   #cg .card .s { font-family:Barlow,sans-serif; font-size:16px; color:#e4dbff; }
+  /* Owner 23 Nov: flash the channel's clips and videos. Left column (same slot as the game cards, only when none is up), above the minimap */
+  #cg .promo { position:absolute; left:44px; top:252px; width:280px; padding:10px; display:grid; gap:8px; background:rgba(12,7,32,.86); }
+  #cg .promo .k { font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); text-shadow:0 0 8px var(--gold); }
+  #cg .promo .v { position:relative; width:260px; border-radius:10px; overflow:hidden; background:#000 center/cover no-repeat; }
+  #cg .promo .v.short { height:462px; } #cg .promo .v.long { height:146px; }
+  #cg .promo .v iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  #cg .promo .h { font-size:18px; font-weight:700; line-height:1.2; color:#ffd9ea; text-shadow:0 0 6px var(--pink); }
+  #cg .promo .s { font-family:Barlow,sans-serif; font-size:15px; color:var(--cyan); }
   #cg .card .h.sm { font-size:16px; }
   #cg .card .row { display:flex; align-items:center; gap:12px; }
   #cg .hp { height:14px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; margin-top:2px; }
@@ -191,6 +199,7 @@
       <div class="card tube c drop hide" data-drop><div class="k">📦 Crew drop · !grab</div><div class="row"><div class="crate">📦</div><div><div class="h" data-drop-who></div><div class="s"><b data-drop-left>10</b> crates left</div></div></div></div>
       <div class="card tube c quiz hide" data-quiz><div class="k">❓ Trivia · answer in chat</div><div class="h sm" data-quiz-q></div></div>
     </div>
+    <div class="promo tube hide" data-promo><div class="k">📺 New on YouTube</div><div class="v short" data-promo-v></div><div class="h" data-promo-h></div><div class="s" data-promo-s>youtube.com/@thecogam</div></div>
     <div class="fx" data-fx></div>
     <div data-alerts></div>
     <div class="debug ${DEBUG ? '' : 'hide'}" data-debug>connecting…</div>`;
@@ -338,6 +347,7 @@
   // how-to tips rotate in the ticker when nothing else is happening
   let TIPS = ['Chat fast + hype words + support = HEAT ★ · type !heat', '★6 HEAT = SPOTLIGHT MODE: top crew credited + clipped', 'Bits: 100 🚓 · 300 💬 · 500 🌧️ · 1000 🚨 · type !support', 'Games pop up on the left · type !games', 'Neon Cash = your XP · climb 6 star ranks · type !rank'];
   let lastTicker = 0, tipIdx = 0;
+  let PROMOS = [], YT = 'youtube.com/@thecogam', promoIdx = 0, promoOn = false;
   setInterval(() => { if (Date.now() - lastTicker > 20000 && !alertBusy) { const el = $('[data-ticker]'); el.textContent = `💡 ${TIPS[tipIdx++ % TIPS.length]}`; el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); $('.ticker .tag').textContent = 'How to'; } }, 12000);
   setInterval(() => {
     const now = Date.now(), dt = last ? (now - last) / 1000 : 0; last = now;
@@ -528,12 +538,34 @@
       paintStats(false);
       if (Array.isArray(d.emotes) && d.emotes.length) EMOTES = d.emotes;
       if (Array.isArray(d.tips) && d.tips.length) TIPS = d.tips;
+      if (Array.isArray(d.promos)) { PROMOS = d.promos; YT = d.yt || YT;
+        TIPS = TIPS.filter((t) => !t.startsWith('📺 ')).concat(PROMOS.slice(0, 3).map((p) => `📺 ${p.title} · on ${YT}`)); }
       if (Array.isArray(d.top)) $('[data-lb]').innerHTML = d.top.length
         ? d.top.map((v, i) => `<li><span class="p">${i + 1}</span><span>${esc(v.name)}</span><span class="r">${esc(v.rank.split(' ')[0])}</span></li>`).join('')
         : '<li><span class="p">–</span><span>Chat to join the crew</span><span class="r"></span></li>';
     } catch { /* keep the last good data */ }
   }
   loadData(); setInterval(loadData, 60000);
+
+  // ---------------- channel promo (owner 23 Nov): flash the channel's clips + videos, muted, ~20 s every 6 min ----------------
+  const gamesUp = () => [...root.querySelectorAll('.games > .card')].some((c) => !c.classList.contains('hide'));
+  function promoShow() {
+    if (promoOn || !PROMOS.length || gamesUp() || alertBusy) return;
+    const p = PROMOS[promoIdx++ % PROMOS.length], v = $('[data-promo-v]');
+    promoOn = true;
+    v.className = `v ${p.short ? 'short' : 'long'}`;
+    v.style.backgroundImage = `url("${p.thumb}")`;
+    v.innerHTML = `<iframe allow="autoplay; encrypted-media" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(p.id)}?autoplay=1&mute=1&controls=0&loop=1&playlist=${encodeURIComponent(p.id)}&modestbranding=1&playsinline=1&rel=0"></iframe>`;
+    $('[data-promo-h]').textContent = p.title; $('[data-promo-s]').textContent = YT;
+    $('[data-promo] .k').textContent = p.short ? '📺 New Short on YouTube' : '📺 New video on YouTube';
+    show($('[data-promo]'));
+    setTimeout(promoHide, 20000);
+  }
+  function promoHide() { if (!promoOn) return; promoOn = false; hide($('[data-promo]')); setTimeout(() => { $('[data-promo-v]').innerHTML = ''; }, 600); }
+  // a game card appearing always wins the slot
+  setInterval(() => { if (promoOn && gamesUp()) promoHide(); }, 1000);
+  setTimeout(promoShow, DEMO ? 4000 : 90000);
+  setInterval(promoShow, 6 * 60000);
   if (PLAYGROUND) window.cogamSim = { line: onLine, reloadData: loadData, stars: () => stars };
 
   // ---------------- demo ----------------
