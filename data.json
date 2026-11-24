@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-24T08:06:38.230Z",
+ "updatedAt": "2026-11-24T09:12:40.395Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,12 @@
  "stats": null,
  "promos": [
   {
+   "id": "UcCYVjc6JpY",
+   "title": "The Deal Went Wrong... 1 vs the Whole Gang 💀",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/UcCYVjc6JpY/hqdefault.jpg"
+  },
+  {
    "id": "_jiw_cv4Elo",
    "title": "Wait... What Are These Pigs Eating in GTA 6? 🐷",
    "short": true,
@@ -104,12 +110,6 @@
    "title": "Dogfights in GTA 6 Hit Different 🚀 (Stolen Military Jet)",
    "short": true,
    "thumb": "https://i.ytimg.com/vi/njVpdT0Ze9g/hqdefault.jpg"
-  },
-  {
-   "id": "G6flVz3T5rY",
-   "title": "The Deal Went Wrong... 1 vs The Whole Gang 💀",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/G6flVz3T5rY/hqdefault.jpg"
   },
   {
    "id": "zXlKEssPZMI",
