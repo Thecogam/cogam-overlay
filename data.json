@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-24T03:24:57.575Z",
+ "updatedAt": "2026-11-24T04:57:50.606Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,30 @@
  "stats": null,
  "promos": [
   {
+   "id": "uZ2FKNK9VH4",
+   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
+   "short": false,
+   "thumb": "https://i.ytimg.com/vi/uZ2FKNK9VH4/hqdefault.jpg"
+  },
+  {
+   "id": "d4jvw2r7ZQ0",
+   "title": "live stream",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/d4jvw2r7ZQ0/hqdefault.jpg"
+  },
+  {
+   "id": "yoQvfaXO44s",
+   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/yoQvfaXO44s/hqdefault.jpg"
+  },
+  {
+   "id": "n5Vkmed4K4c",
+   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
+   "short": false,
+   "thumb": "https://i.ytimg.com/vi/n5Vkmed4K4c/hqdefault.jpg"
+  },
+  {
    "id": "njVpdT0Ze9g",
    "title": "Dogfights in GTA 6 Hit Different 🚀 (Stolen Military Jet)",
    "short": true,
@@ -92,30 +116,6 @@
    "title": "I Stole a Fighter Jet in GTA 6... Then Shot One Down",
    "short": true,
    "thumb": "https://i.ytimg.com/vi/MrQoRInOCE0/hqdefault.jpg"
-  },
-  {
-   "id": "wtgwUQrL8RM",
-   "title": "I Stole a Fighter Jet in GTA 6... Then Shot One Down | THECOGAM",
-   "short": false,
-   "thumb": "https://i.ytimg.com/vi/wtgwUQrL8RM/hqdefault.jpg"
-  },
-  {
-   "id": "ddl5EwlFqRA",
-   "title": "\"Shoot it, Jason!\" Speargun vs Tiger Shark | GTA 6 Blind Playthrough",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/ddl5EwlFqRA/hqdefault.jpg"
-  },
-  {
-   "id": "De-g0JSBDjs",
-   "title": "Seaplane vs Fighter Jets? Plan B: Become the Missile",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/De-g0JSBDjs/hqdefault.jpg"
-  },
-  {
-   "id": "04n1jFA6IUI",
-   "title": "My First Night in GTA 6 Went Sideways Fast",
-   "short": false,
-   "thumb": "https://i.ytimg.com/vi/04n1jFA6IUI/hqdefault.jpg"
   }
  ],
  "yt": "youtube.com/@thecogam"
