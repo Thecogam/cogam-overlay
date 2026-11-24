@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-24T05:47:32.115Z",
+ "updatedAt": "2026-11-24T06:19:39.299Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -68,6 +68,55 @@
   "Neon Cash = your XP · climb 6 star ranks · type !rank"
  ],
  "stats": null,
- "promos": [],
+ "promos": [
+  {
+   "id": "uZ2FKNK9VH4",
+   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
+   "short": false,
+   "thumb": "https://i.ytimg.com/vi/uZ2FKNK9VH4/hqdefault.jpg"
+  },
+  {
+   "id": "d4jvw2r7ZQ0",
+   "title": "live stream",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/d4jvw2r7ZQ0/hqdefault.jpg"
+  },
+  {
+   "id": "yoQvfaXO44s",
+   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/yoQvfaXO44s/hqdefault.jpg"
+  },
+  {
+   "id": "n5Vkmed4K4c",
+   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
+   "short": false,
+   "thumb": "https://i.ytimg.com/vi/n5Vkmed4K4c/hqdefault.jpg"
+  },
+  {
+   "id": "njVpdT0Ze9g",
+   "title": "Dogfights in GTA 6 Hit Different 🚀 (Stolen Military Jet)",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/njVpdT0Ze9g/hqdefault.jpg"
+  },
+  {
+   "id": "G6flVz3T5rY",
+   "title": "The Deal Went Wrong... 1 vs The Whole Gang 💀",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/G6flVz3T5rY/hqdefault.jpg"
+  },
+  {
+   "id": "zXlKEssPZMI",
+   "title": "This GTA 6 NPC Has Zero Filter 😂",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/zXlKEssPZMI/hqdefault.jpg"
+  },
+  {
+   "id": "MrQoRInOCE0",
+   "title": "I Stole a Fighter Jet in GTA 6... Then Shot One Down",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/MrQoRInOCE0/hqdefault.jpg"
+  }
+ ],
  "yt": "youtube.com/@thecogam"
 }
