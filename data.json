@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-24T06:19:39.299Z",
+ "updatedAt": "2026-11-24T06:51:56.923Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,12 @@
  "stats": null,
  "promos": [
   {
+   "id": "_jiw_cv4Elo",
+   "title": "Wait... What Are These Pigs Eating in GTA 6? 🐷",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/_jiw_cv4Elo/hqdefault.jpg"
+  },
+  {
    "id": "uZ2FKNK9VH4",
    "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
    "short": false,
@@ -110,12 +116,6 @@
    "title": "This GTA 6 NPC Has Zero Filter 😂",
    "short": true,
    "thumb": "https://i.ytimg.com/vi/zXlKEssPZMI/hqdefault.jpg"
-  },
-  {
-   "id": "MrQoRInOCE0",
-   "title": "I Stole a Fighter Jet in GTA 6... Then Shot One Down",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/MrQoRInOCE0/hqdefault.jpg"
   }
  ],
  "yt": "youtube.com/@thecogam"
