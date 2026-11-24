@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-24T09:42:49.864Z",
+ "updatedAt": "2026-11-24T09:54:18.339Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -68,55 +68,6 @@
   "Neon Cash = your XP · climb 6 star ranks · type !rank"
  ],
  "stats": null,
- "promos": [
-  {
-   "id": "UcCYVjc6JpY",
-   "title": "The Deal Went Wrong... 1 vs the Whole Gang 💀",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/UcCYVjc6JpY/hqdefault.jpg"
-  },
-  {
-   "id": "_jiw_cv4Elo",
-   "title": "Wait... What Are These Pigs Eating in GTA 6? 🐷",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/_jiw_cv4Elo/hqdefault.jpg"
-  },
-  {
-   "id": "uZ2FKNK9VH4",
-   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
-   "short": false,
-   "thumb": "https://i.ytimg.com/vi/uZ2FKNK9VH4/hqdefault.jpg"
-  },
-  {
-   "id": "d4jvw2r7ZQ0",
-   "title": "live stream",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/d4jvw2r7ZQ0/hqdefault.jpg"
-  },
-  {
-   "id": "yoQvfaXO44s",
-   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/yoQvfaXO44s/hqdefault.jpg"
-  },
-  {
-   "id": "n5Vkmed4K4c",
-   "title": "GTA 6 Gets OUT OF CONTROL! (Blind Playthrough) LIVE | THECOGAM",
-   "short": false,
-   "thumb": "https://i.ytimg.com/vi/n5Vkmed4K4c/hqdefault.jpg"
-  },
-  {
-   "id": "njVpdT0Ze9g",
-   "title": "Dogfights in GTA 6 Hit Different 🚀 (Stolen Military Jet)",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/njVpdT0Ze9g/hqdefault.jpg"
-  },
-  {
-   "id": "zXlKEssPZMI",
-   "title": "This GTA 6 NPC Has Zero Filter 😂",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/zXlKEssPZMI/hqdefault.jpg"
-  }
- ],
+ "promos": [],
  "yt": "youtube.com/@thecogam"
 }
