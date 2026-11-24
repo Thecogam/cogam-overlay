@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-24T10:35:29.261Z",
+ "updatedAt": "2026-11-24T11:37:56.027Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,12 @@
  "stats": null,
  "promos": [
   {
+   "id": "XIKjCkuXK4U",
+   "title": "Don't Walk Through The Swamp In GTA 6 (Or Else) 🐊",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/XIKjCkuXK4U/hqdefault.jpg"
+  },
+  {
    "id": "UcCYVjc6JpY",
    "title": "The Deal Went Wrong... 1 vs the Whole Gang 💀",
    "short": true,
@@ -110,12 +116,6 @@
    "title": "Dogfights in GTA 6 Hit Different 🚀 (Stolen Military Jet)",
    "short": true,
    "thumb": "https://i.ytimg.com/vi/njVpdT0Ze9g/hqdefault.jpg"
-  },
-  {
-   "id": "zXlKEssPZMI",
-   "title": "This GTA 6 NPC Has Zero Filter 😂",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/zXlKEssPZMI/hqdefault.jpg"
   }
  ],
  "yt": "youtube.com/@thecogam"
