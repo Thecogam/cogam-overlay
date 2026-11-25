@@ -1,6 +1,6 @@
 {
- "updatedAt": "2026-11-25T09:53:20.524Z",
- "live": false,
+ "updatedAt": "2026-11-25T10:28:44.167Z",
+ "live": true,
  "goal": {
   "label": "Follower goal",
   "current": 112,
@@ -9,7 +9,7 @@
  "top": [
   {
    "name": "StreamStickers",
-   "xp": 820,
+   "xp": 880,
    "rank": "2-Star Suspect"
   },
   {
@@ -67,7 +67,14 @@
   "Games pop up on the left · type !games",
   "Neon Cash = your XP · climb 6 star ranks · type !rank"
  ],
- "stats": null,
+ "stats": {
+  "startedAt": "2026-11-25T09:59:09.000Z",
+  "deaths": 0,
+  "crashes": 0,
+  "heatRecord": 0,
+  "spotlights": 0,
+  "chatters": 0
+ },
  "promos": [
   {
    "id": "XIKjCkuXK4U",
