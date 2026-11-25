@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-25T20:24:13.418Z",
+ "updatedAt": "2026-11-25T22:59:29.416Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,12 @@
  "stats": null,
  "promos": [
   {
+   "id": "r5_ScvWpIdg",
+   "title": "GTA 6 Chapter 1 FINALE: I Have No Idea What's Coming (Blind Playthroug",
+   "short": false,
+   "thumb": "https://i.ytimg.com/vi/r5_ScvWpIdg/hqdefault.jpg"
+  },
+  {
    "id": "Dl4wvsyD-L4",
    "title": "Why Men Fall In Love With Lucia | GTA 6",
    "short": true,
@@ -110,12 +116,6 @@
    "title": "I Stole a Fighter Jet in GTA 6... Then Shot One Down",
    "short": true,
    "thumb": "https://i.ytimg.com/vi/MrQoRInOCE0/hqdefault.jpg"
-  },
-  {
-   "id": "wtgwUQrL8RM",
-   "title": "I Stole a Fighter Jet in GTA 6... Then Shot One Down | THECOGAM",
-   "short": false,
-   "thumb": "https://i.ytimg.com/vi/wtgwUQrL8RM/hqdefault.jpg"
   }
  ],
  "yt": "youtube.com/@thecogam"
