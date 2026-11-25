@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-25T19:05:13.158Z",
+ "updatedAt": "2026-11-25T19:08:38.300Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,12 @@
  "stats": null,
  "promos": [
   {
+   "id": "Dl4wvsyD-L4",
+   "title": "Why Men Fall In Love With Lucia | GTA 6",
+   "short": true,
+   "thumb": "https://i.ytimg.com/vi/Dl4wvsyD-L4/hqdefault.jpg"
+  },
+  {
    "id": "XIKjCkuXK4U",
    "title": "Don't Walk Through The Swamp In GTA 6 (Or Else) 🐊",
    "short": true,
@@ -110,12 +116,6 @@
    "title": "I Stole a Fighter Jet in GTA 6... Then Shot One Down | THECOGAM",
    "short": false,
    "thumb": "https://i.ytimg.com/vi/wtgwUQrL8RM/hqdefault.jpg"
-  },
-  {
-   "id": "ddl5EwlFqRA",
-   "title": "\"Shoot it, Jason!\" Speargun vs Tiger Shark | GTA 6 Blind Playthrough",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/ddl5EwlFqRA/hqdefault.jpg"
   }
  ],
  "yt": "youtube.com/@thecogam"
