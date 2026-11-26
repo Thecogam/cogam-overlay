@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-25T22:59:29.416Z",
+ "updatedAt": "2026-11-26T03:44:03.630Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,12 @@
  "stats": null,
  "promos": [
   {
+   "id": "hSTwjOjcbbU",
+   "title": "GTA 6 Chapter 1 FINALE: I Have No Idea What's Coming (Blind Playthroug",
+   "short": false,
+   "thumb": "https://i.ytimg.com/vi/hSTwjOjcbbU/hqdefault.jpg"
+  },
+  {
    "id": "r5_ScvWpIdg",
    "title": "GTA 6 Chapter 1 FINALE: I Have No Idea What's Coming (Blind Playthroug",
    "short": false,
@@ -110,12 +116,6 @@
    "title": "This GTA 6 NPC Has Zero Filter 😂",
    "short": true,
    "thumb": "https://i.ytimg.com/vi/zXlKEssPZMI/hqdefault.jpg"
-  },
-  {
-   "id": "MrQoRInOCE0",
-   "title": "I Stole a Fighter Jet in GTA 6... Then Shot One Down",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/MrQoRInOCE0/hqdefault.jpg"
   }
  ],
  "yt": "youtube.com/@thecogam"
