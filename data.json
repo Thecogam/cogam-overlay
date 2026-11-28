@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-28T03:01:23.763Z",
+ "updatedAt": "2026-11-28T12:58:30.042Z",
  "live": false,
  "goal": {
   "label": "Follower goal",
@@ -70,6 +70,12 @@
  "stats": null,
  "promos": [
   {
+   "id": "lV4T_rlh8ds",
+   "title": "GTA 6 Chapter 2 BEGINS: I Have No Idea What's Coming (Blind Playthroug",
+   "short": false,
+   "thumb": "https://i.ytimg.com/vi/lV4T_rlh8ds/hqdefault.jpg"
+  },
+  {
    "id": "zC8ujShM7V8",
    "title": "Parties in GTA 6 Hit Different",
    "short": true,
@@ -110,12 +116,6 @@
    "title": "Wait... What Are These Pigs Eating in GTA 6? 🐷",
    "short": true,
    "thumb": "https://i.ytimg.com/vi/_jiw_cv4Elo/hqdefault.jpg"
-  },
-  {
-   "id": "njVpdT0Ze9g",
-   "title": "Dogfights in GTA 6 Hit Different 🚀 (Stolen Military Jet)",
-   "short": true,
-   "thumb": "https://i.ytimg.com/vi/njVpdT0Ze9g/hqdefault.jpg"
   }
  ],
  "yt": "youtube.com/@thecogam"
